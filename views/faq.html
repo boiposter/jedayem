@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="جدايم - الأسئلة الشائعة. كل شي تحتاج تعرفه عن الموقع.">
+  <title>جدايم | الأسئلة الشائعة</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="logo">جداي<span>م</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="القائمة">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/">الرئيسية</a></li>
+        <li><a href="/odds">الاحتمالات</a></li>
+        <li><a href="/live">المباشر</a></li>
+        <li><a href="/faq" class="active">الأسئلة الشائعة</a></li>
+      </ul>
+      <div class="nav-auth" id="navAuth">
+        <a href="/account" class="btn btn-outline">دخول</a>
+        <a href="/account" class="btn btn-primary">سجّل الحين</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <h1 class="section-title" style="text-align:center">❓ الأسئلة الشائعة</h1>
+    <p class="section-subtitle" style="text-align:center">أجوبة على أكثر الأسئلة اللي تجينا</p>
+
+    <div class="faq-list" id="faqList">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>شلون أسجل في جدايم؟</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>التسجيل سهل وسريع. روح صفحة "حسابي" واضغط على "حساب جديد". ادخل اسم المستخدم والإيميل وكلمة السر وخلاص! حسابك جاهز.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>هل الموقع آمن؟</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>نعم، نستخدم أحدث تقنيات الحماية مثل تشفير SSL، حماية من هجمات DDoS، تشفير كلمات السر، وجدار حماية متقدم. بياناتك عندنا بأمان.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>شلون أشوف المباريات المباشرة؟</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>روح صفحة "المباشر" من القائمة الرئيسية. بتشوف كل المباريات اللي تلعب الحين مع النتائج والاحتمالات. الصفحة تتحدث تلقائياً كل ٣٠ ثانية.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>شنو هي الاحتمالات وكيف تشتغل؟</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>الاحتمالات هي أرقام تعكس فرصة فوز فريق معين. كل ما كان الرقم أكبر، كل ما كان الربح المحتمل أكثر بس الفرصة أقل. مثلاً، احتمال ١.٥٠ يعني الفريق متوقع يفوز، واحتمال ٤.٠٠ يعني فرصته أقل بس الربح أكبر.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>كيف أتواصل مع الدعم؟</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>تقدر تتواصل معنا عن طريق الإيميل support@jedayem.com أو من خلال حسابنا على تويتر @jedayem. فريق الدعم موجود ٢٤/٧ لخدمتك.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>هل يشتغل الموقع على الجوال؟</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>أكيد! الموقع مصمم يشتغل على كل الأجهزة — جوال، تابلت، ولابتوب. التصميم متجاوب ويتأقلم مع حجم شاشتك تلقائياً.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>شنو الرياضات المتاحة؟</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>حالياً نغطي كرة القدم وكرة السلة مع تركيز على الدوري السعودي والدوريات الخليجية. بنضيف رياضات أكثر قريباً مثل التنس والكريكت وغيرها.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>نسيت كلمة السر، شلون أرجعها؟</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>تواصل مع فريق الدعم على support@jedayem.com وبنساعدك ترجع حسابك. تأكد إنك تستخدم نفس الإيميل اللي سجلت فيه.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">جداي<span>م</span></div>
+        <p>أفضل موقع مراهنات رياضية في الخليج.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="/">الرئيسية</a></li>
+          <li><a href="/odds">الاحتمالات</a></li>
+          <li><a href="/live">المباشر</a></li>
+          <li><a href="/faq">الأسئلة الشائعة</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>الحساب</h4>
+        <ul>
+          <li><a href="/account">تسجيل دخول</a></li>
+          <li><a href="/account">حساب جديد</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 جدايم. جميع الحقوق محفوظة.</div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/js/app.js"></script>
+  <script src="/js/faq.js"></script>
+</body>
+</html>

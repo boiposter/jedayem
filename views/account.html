@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="جدايم - حسابي. سجل دخول أو أنشئ حساب جديد.">
+  <title>جدايم | حسابي</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="logo">جداي<span>م</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="القائمة">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/">الرئيسية</a></li>
+        <li><a href="/odds">الاحتمالات</a></li>
+        <li><a href="/live">المباشر</a></li>
+        <li><a href="/faq">الأسئلة الشائعة</a></li>
+      </ul>
+      <div class="nav-auth" id="navAuth">
+        <a href="/account" class="btn btn-outline">دخول</a>
+        <a href="/account" class="btn btn-primary">سجّل الحين</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Auth Section (shown when logged out) -->
+  <div class="auth-container" id="authSection">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">تسجيل دخول</button>
+        <button class="auth-tab" data-tab="register">حساب جديد</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">الإيميل أو اسم المستخدم</label>
+          <input type="text" id="loginEmail" class="form-control" placeholder="ادخل إيميلك أو اسم المستخدم" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">كلمة السر</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="ادخل كلمة السر" required autocomplete="current-password">
+        </div>
+        <div id="loginError" class="form-error" style="margin-bottom:1rem;display:none"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%" id="loginBtn">
+          دخول
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" style="display:none">
+        <div class="form-group">
+          <label for="regUsername">اسم المستخدم</label>
+          <input type="text" id="regUsername" class="form-control" placeholder="اختر اسم مستخدم" required minlength="3" maxlength="20" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="regEmail">الإيميل</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="ادخل إيميلك" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="regDisplayName">الاسم المعروض (اختياري)</label>
+          <input type="text" id="regDisplayName" class="form-control" placeholder="الاسم اللي يبان للناس" maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="regPassword">كلمة السر</label>
+          <input type="password" id="regPassword" class="form-control" placeholder="٨ أحرف على الأقل (حروف + أرقام)" required minlength="8" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label for="regPasswordConfirm">تأكيد كلمة السر</label>
+          <input type="password" id="regPasswordConfirm" class="form-control" placeholder="أعد كتابة كلمة السر" required autocomplete="new-password">
+        </div>
+        <div id="registerError" class="form-error" style="margin-bottom:1rem;display:none"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%" id="registerBtn">
+          سجّل الحين
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Profile Section (shown when logged in) -->
+  <div class="section" id="profileSection" style="display:none">
+    <div class="profile-card card">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">-</div>
+        <div class="profile-info">
+          <h2 id="profileName">--</h2>
+          <p id="profileEmail">--</p>
+        </div>
+      </div>
+
+      <div class="balance-display">
+        <div class="balance-label">رصيدك</div>
+        <div class="balance-amount" id="profileBalance">0.00</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+        <div class="card" style="text-align:center;padding:1rem">
+          <div style="font-size:0.85rem;color:var(--gray-400)">الرهانات</div>
+          <div style="font-size:1.3rem;font-weight:700;color:var(--green-400)">0</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem">
+          <div style="font-size:0.85rem;color:var(--gray-400)">الفوز</div>
+          <div style="font-size:1.3rem;font-weight:700;color:var(--gold-500)">0</div>
+        </div>
+      </div>
+
+      <button class="btn btn-danger" style="width:100%" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">جداي<span>م</span></div>
+        <p>أفضل موقع مراهنات رياضية في الخليج.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="/">الرئيسية</a></li>
+          <li><a href="/odds">الاحتمالات</a></li>
+          <li><a href="/live">المباشر</a></li>
+          <li><a href="/faq">الأسئلة الشائعة</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>الحساب</h4>
+        <ul>
+          <li><a href="/account">تسجيل دخول</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 جدايم. جميع الحقوق محفوظة.</div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/js/app.js"></script>
+  <script src="/js/account.js"></script>
+</body>
+</html>

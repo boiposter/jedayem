@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="جدايم - أفضل موقع مراهنات رياضية في الخليج. احتمالات مباشرة، مباريات حية، وتجربة آمنة.">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>جدايم | الرئيسية</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="logo">جداي<span>م</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="القائمة">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/" class="active">الرئيسية</a></li>
+        <li><a href="/odds">الاحتمالات</a></li>
+        <li><a href="/live">المباشر</a></li>
+        <li><a href="/faq">الأسئلة الشائعة</a></li>
+      </ul>
+      <div class="nav-auth" id="navAuth">
+        <a href="/account" class="btn btn-outline">دخول</a>
+        <a href="/account" class="btn btn-primary">سجّل الحين</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>مراهنات رياضية <span class="highlight">بطعم خليجي</span></h1>
+      <p>أفضل الاحتمالات على المباريات المحلية والعالمية. سجّل الحين وابدأ تجربتك مع جدايم.</p>
+      <div class="hero-actions">
+        <a href="/account" class="btn btn-primary btn-lg">ابدأ الحين</a>
+        <a href="/live" class="btn btn-outline btn-lg"><i class="fas fa-circle" style="color:var(--red-500);font-size:0.6rem"></i> المباريات المباشرة</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-item">
+      <div class="stat-number" id="statMatches">--</div>
+      <div class="stat-label">مباراة متاحة</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="statLive">--</div>
+      <div class="stat-label">مباشر الحين</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="statSports">--</div>
+      <div class="stat-label">رياضة</div>
+    </div>
+  </div>
+
+  <!-- Featured Matches -->
+  <section class="section">
+    <h2 class="section-title">🔥 مباريات اليوم</h2>
+    <p class="section-subtitle">أبرز المباريات المتاحة الحين</p>
+    <div class="matches-grid" id="featuredMatches">
+      <div class="loader"><div class="spinner"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/odds" class="btn btn-outline">شوف كل الاحتمالات <i class="fas fa-arrow-left"></i></a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <h2 class="section-title" style="text-align:center">ليش جدايم؟</h2>
+    <p class="section-subtitle" style="text-align:center">مميزات تخليك ما تروح مكان ثاني</p>
+    <div class="features-grid">
+      <div class="card feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>سرعة خيالية</h3>
+        <p>موقع سريع وخفيف، ما يحتاج تنتظر. كل شي يحمّل بلحظة.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>أمان عالي</h3>
+        <p>بياناتك محمية بأحدث تقنيات التشفير والحماية.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>يشتغل على كل جهاز</h3>
+        <p>تصميم متجاوب يشتغل على الجوال والتابلت والكمبيوتر.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>أفضل الاحتمالات</h3>
+        <p>نقدم لك أعلى احتمالات في السوق على كل المباريات.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">جداي<span>م</span></div>
+        <p>أفضل موقع مراهنات رياضية في الخليج. نوفر لك تجربة آمنة وسريعة مع أعلى الاحتمالات.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="/">الرئيسية</a></li>
+          <li><a href="/odds">الاحتمالات</a></li>
+          <li><a href="/live">المباشر</a></li>
+          <li><a href="/faq">الأسئلة الشائعة</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>الحساب</h4>
+        <ul>
+          <li><a href="/account">تسجيل دخول</a></li>
+          <li><a href="/account">حساب جديد</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 جدايم. جميع الحقوق محفوظة.
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/home.js"></script>
+</body>
+</html>

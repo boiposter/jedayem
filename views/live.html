@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="جدايم - المباريات المباشرة. تابع النتائج لحظة بلحظة.">
+  <title>جدايم | المباشر</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="logo">جداي<span>م</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="القائمة">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/">الرئيسية</a></li>
+        <li><a href="/odds">الاحتمالات</a></li>
+        <li><a href="/live" class="active">المباشر</a></li>
+        <li><a href="/faq">الأسئلة الشائعة</a></li>
+      </ul>
+      <div class="nav-auth" id="navAuth">
+        <a href="/account" class="btn btn-outline">دخول</a>
+        <a href="/account" class="btn btn-primary">سجّل الحين</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;flex-wrap:wrap">
+      <h1 class="section-title" style="margin-bottom:0">المباريات المباشرة</h1>
+      <span class="live-badge"><span class="live-dot"></span> مباشر</span>
+    </div>
+    <p class="section-subtitle">تابع المباريات لحظة بلحظة — يتحدث تلقائياً كل ٣٠ ثانية</p>
+
+    <div id="liveCount" style="margin-bottom:1.5rem;color:var(--gray-400);font-size:0.9rem"></div>
+
+    <div class="matches-grid" id="liveMatches">
+      <div class="loader"><div class="spinner"></div></div>
+    </div>
+
+    <!-- Upcoming matches -->
+    <div style="margin-top:3rem">
+      <h2 class="section-title">📅 المباريات القادمة</h2>
+      <p class="section-subtitle">المباريات اللي بتبدأ قريب</p>
+      <div class="matches-grid" id="upcomingMatches">
+        <div class="loader"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">جداي<span>م</span></div>
+        <p>أفضل موقع مراهنات رياضية في الخليج.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="/">الرئيسية</a></li>
+          <li><a href="/odds">الاحتمالات</a></li>
+          <li><a href="/live">المباشر</a></li>
+          <li><a href="/faq">الأسئلة الشائعة</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>الحساب</h4>
+        <ul>
+          <li><a href="/account">تسجيل دخول</a></li>
+          <li><a href="/account">حساب جديد</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 جدايم. جميع الحقوق محفوظة.</div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/js/app.js"></script>
+  <script src="/js/live.js"></script>
+</body>
+</html>
