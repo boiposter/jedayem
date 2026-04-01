@@ -1,7 +1,6 @@
 /**
  * Jedayem — Shared JavaScript
  * Utility functions, API helpers, and shared components
- * Kalshi-inspired design
  */
 
 // ===== NAV TOGGLE (Mobile) =====
@@ -88,92 +87,50 @@ function formatTime(dateStr) {
   }
 }
 
-// ===== CONVERT ODDS TO PERCENTAGE =====
-function oddsToPercentage(odds) {
-  if (!odds || odds === '-') return '-';
-  const num = parseFloat(odds);
-  if (isNaN(num) || num <= 0) return '-';
-  const prob = Math.round((1 / num) * 100);
-  return `${prob}%`;
+// ===== CONVERT TO ARABIC NUMERALS =====
+function toArabicNum(num) {
+  if (num === null || num === undefined) return '';
+  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  return String(num).split('').map(digit => {
+    return arabicDigits[parseInt(digit, 10)] || digit;
+  }).join('');
 }
 
-// ===== ANIMATED COUNTER =====
-function animateCounter(element, finalValue, duration = 1500) {
-  if (!element || isNaN(finalValue)) return;
-  const start = parseInt(element.textContent) || 0;
-  const range = finalValue - start;
-  const increment = range / (duration / 16);
-  let current = start;
-  const timer = setInterval(() => {
-    current += increment;
-    if ((increment > 0 && current >= finalValue) || (increment < 0 && current <= finalValue)) {
-      element.textContent = finalValue;
-      clearInterval(timer);
-    } else {
-      element.textContent = Math.floor(current);
-    }
-  }, 16);
-}
-
-// ===== SKELETON LOADING HELPERS =====
-function createSkeletonCard() {
-  return `
-    <div class="skeleton match-card">
-      <div class="skeleton-line" style="height:12px;margin-bottom:8px;width:40%"></div>
-      <div class="skeleton-line" style="height:16px;margin-bottom:12px;width:60%"></div>
-      <div class="skeleton-line" style="height:14px;width:80%"></div>
-    </div>`;
-}
-
-function showSkeletonLoading(container, count = 3) {
-  if (!container) return;
-  let html = '';
-  for (let i = 0; i < count; i++) {
-    html += createSkeletonCard();
+// ===== FORMAT VOLUME (15420 -> 15.4K, 1500000 -> 1.5M) =====
+function formatVolume(num) {
+  if (!num) return '٠';
+  if (num >= 1000000) {
+    const val = (num / 1000000).toFixed(1);
+    return toArabicNum(val) + 'M';
   }
-  container.innerHTML = html;
+  if (num >= 1000) {
+    const val = (num / 1000).toFixed(1);
+    return toArabicNum(val) + 'K';
+  }
+  return toArabicNum(num);
 }
 
-function hideSkeletonLoading(container) {
-  if (!container) return;
-  container.querySelectorAll('.skeleton').forEach(el => el.remove());
+// ===== CONVERT ODDS TO PROBABILITY PERCENTAGE =====
+function oddsToPercent(odds) {
+  if (!odds || odds <= 0) return 0;
+  return Math.round((1 / parseFloat(odds)) * 100);
 }
 
-// ===== SEARCH BAR FUNCTIONALITY =====
-function setupSearchBar(inputSelector, listSelector, callback) {
-  const input = document.querySelector(inputSelector);
-  const list = document.querySelector(listSelector);
-  if (!input || !list) return;
-
-  input.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase().trim();
-    if (callback) callback(query);
-  });
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      input.value = '';
-      if (callback) callback('');
-    }
-  });
-}
-
-// ===== RENDER MATCH CARD - KALSHI STYLE =====
+// ===== RENDER MATCH CARD WITH POLYMARKET-STYLE ENHANCEMENTS =====
 function renderMatchCard(match) {
   const m = match;
   const statusClass = `status-${m.status}`;
   const statusLabels = { live: 'مباشر', upcoming: 'قادمة', finished: 'انتهت' };
+  const statusEmojis = { live: '🔴', upcoming: '🟢', finished: '⚪' };
   const isLive = m.status === 'live';
   const isFinished = m.status === 'finished';
   const hasDraw = m.odds_draw !== null && m.odds_draw !== undefined;
 
-  // Sport tag
-  const sportTag = `<span class="sport-tag">${escapeHtml(m.sport)}</span>`;
+  // Generate random volume and participants if not present
+  const volume = m.volume || Math.floor(Math.random() * 500000) + 10000;
+  const participants = m.participants || Math.floor(Math.random() * 500) + 50;
+  const oddsChange = m.oddsChange || (Math.random() > 0.5 ? 1 : -1) * Math.random().toFixed(2);
 
-  // Live pulse indicator
-  const livePulse = isLive ? '<span class="live-pulse"></span>' : '';
-
-  // Score/VS section
   let scoreSection = '';
   if (isLive || isFinished) {
     scoreSection = `<div class="match-score">${m.score_home} - ${m.score_away}</div>`;
@@ -181,63 +138,96 @@ function renderMatchCard(match) {
     scoreSection = `<div class="match-vs">VS</div>`;
   }
 
-  // Percentage odds pills
-  let oddsHtml = '';
-  const homeProb = oddsToPercentage(m.odds_home);
-  const awayProb = oddsToPercentage(m.odds_away);
-  const drawProb = oddsToPercentage(m.odds_draw);
+  // Sport tag with emoji
+  const sportEmoji = {
+    'كرة القدم': '⚽',
+    'كرة السلة': '🏀',
+    'تنس': '🎾',
+    'هوكي': '🏒',
+    'تنس الطاولة': '🏓'
+  };
+  const sport = m.sport || 'رياضة';
+  const emoji = sportEmoji[sport] || '🏆';
 
+  // Build odds bars (probability visualization)
+  let oddsBarsHtml = '';
   if (hasDraw) {
-    oddsHtml = `
-      <div class="odds-pills">
-        <div class="odds-pill home-pill">
-          <div class="odds-prob">${homeProb}</div>
-          <div class="odds-payout">${m.odds_home || '-'}x</div>
+    const homePercent = oddsToPercent(m.odds_home || 1);
+    const drawPercent = oddsToPercent(m.odds_draw || 1);
+    const awayPercent = oddsToPercent(m.odds_away || 1);
+    const total = homePercent + drawPercent + awayPercent;
+    const homePercNorm = Math.round((homePercent / total) * 100);
+    const drawPercNorm = Math.round((drawPercent / total) * 100);
+    const awayPercNorm = Math.round((awayPercent / total) * 100);
+
+    oddsBarsHtml = `
+      <div class="odds-bars-container">
+        <div class="odds-bar-group">
+          <div class="odds-bar home-bar" style="width: ${homePercNorm}%">
+            <span class="odds-percent">${homePercNorm}%</span>
+          </div>
         </div>
-        <div class="odds-pill draw-pill">
-          <div class="odds-prob">${drawProb}</div>
-          <div class="odds-payout">${m.odds_draw || '-'}x</div>
+        <div class="odds-bar-group">
+          <div class="odds-bar draw-bar" style="width: ${drawPercNorm}%">
+            <span class="odds-percent">${drawPercNorm}%</span>
+          </div>
         </div>
-        <div class="odds-pill away-pill">
-          <div class="odds-prob">${awayProb}</div>
-          <div class="odds-payout">${m.odds_away || '-'}x</div>
+        <div class="odds-bar-group">
+          <div class="odds-bar away-bar" style="width: ${awayPercNorm}%">
+            <span class="odds-percent">${awayPercNorm}%</span>
+          </div>
         </div>
       </div>`;
   } else {
-    oddsHtml = `
-      <div class="odds-pills two-way">
-        <div class="odds-pill home-pill">
-          <div class="odds-prob">${homeProb}</div>
-          <div class="odds-payout">${m.odds_home || '-'}x</div>
+    const homePercent = oddsToPercent(m.odds_home || 1);
+    const awayPercent = oddsToPercent(m.odds_away || 1);
+    const total = homePercent + awayPercent;
+    const homePercNorm = Math.round((homePercent / total) * 100);
+    const awayPercNorm = Math.round((awayPercent / total) * 100);
+
+    oddsBarsHtml = `
+      <div class="odds-bars-container two-way">
+        <div class="odds-bar-group">
+          <div class="odds-bar home-bar" style="width: ${homePercNorm}%">
+            <span class="odds-percent">${homePercNorm}%</span>
+          </div>
         </div>
-        <div class="odds-pill away-pill">
-          <div class="odds-prob">${awayProb}</div>
-          <div class="odds-payout">${m.odds_away || '-'}x</div>
+        <div class="odds-bar-group">
+          <div class="odds-bar away-bar" style="width: ${awayPercNorm}%">
+            <span class="odds-percent">${awayPercNorm}%</span>
+          </div>
         </div>
       </div>`;
   }
 
-  // Volume (random realistic number in Arabic numerals)
-  const baseVolume = Math.floor(Math.random() * 50) + 5;
-  const volume = `${(baseVolume * 1000).toLocaleString('ar-SA')} مراهنة`;
+  // Odds change indicator
+  const changeSign = parseFloat(oddsChange) > 0 ? '📈' : '📉';
+  const changeColor = parseFloat(oddsChange) > 0 ? 'green' : 'red';
 
   return `
-    <div class="match-card kalshi-card hover-lift">
-      <div class="card-header">
-        ${sportTag}
-        ${livePulse}
-        <span class="match-status ${statusClass}">${statusLabels[m.status] || m.status}</span>
+    <div class="match-card fadeInUp">
+      <div class="match-header">
+        <span class="match-sport-pill">${emoji} ${escapeHtml(sport)}</span>
+        <span class="match-status ${statusClass}">${statusEmojis[m.status] || ''} ${statusLabels[m.status] || m.status}</span>
       </div>
       <div class="match-teams">
-        <div class="team home-team"><span class="team-name">${escapeHtml(m.team_home)}</span></div>
+        <div class="team"><span class="team-name">${escapeHtml(m.team_home)}</span></div>
         ${scoreSection}
-        <div class="team away-team"><span class="team-name">${escapeHtml(m.team_away)}</span></div>
+        <div class="team"><span class="team-name">${escapeHtml(m.team_away)}</span></div>
       </div>
-      ${oddsHtml}
-      <div class="card-footer">
-        <div class="volume-indicator">${volume}</div>
-        <div class="match-time">${formatTime(m.start_time)}</div>
+      ${oddsBarsHtml}
+      <div class="match-badges">
+        <span class="match-volume-badge">📊 ${toArabicNum(formatVolume(volume))} حجم</span>
+        <span class="match-participants">👥 ${toArabicNum(participants)} مشارك</span>
       </div>
+      <div class="match-change-footer">
+        <span class="odds-change ${changeColor}">${changeSign} ${parseFloat(oddsChange).toFixed(2)}%</span>
+        <div class="mini-chart-placeholder">
+          <canvas id="chart-${escapeHtml(m.id || Math.random())}" class="mini-chart" width="120" height="40"></canvas>
+        </div>
+      </div>
+      <button class="bet-btn">راهن الحين</button>
+      <div class="match-time">${formatTime(m.start_time)}</div>
     </div>`;
 }
 
@@ -263,4 +253,52 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch(e) {
     // Not logged in — keep default nav
   }
+});
+
+// ===== DRAW MINI SPARKLINE CHARTS =====
+function drawMiniChart(canvasId, data = null) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  const width = canvas.width;
+  const height = canvas.height;
+
+  // Generate random sparkline data if not provided
+  const values = data || Array.from({ length: 10 }, () => Math.random() * 100);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+
+  // Clear canvas
+  ctx.fillStyle = 'rgba(0, 214, 143, 0.1)';
+  ctx.fillRect(0, 0, width, height);
+
+  // Draw line
+  ctx.strokeStyle = '#00d68f';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+
+  values.forEach((val, i) => {
+    const x = (i / (values.length - 1)) * width;
+    const y = height - ((val - min) / range) * height + 5;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+
+  // Fill under curve
+  ctx.lineTo(width, height);
+  ctx.lineTo(0, height);
+  ctx.fillStyle = 'rgba(0, 214, 143, 0.15)';
+  ctx.fill();
+}
+
+// Initialize mini charts when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  const canvases = document.querySelectorAll('.mini-chart');
+  canvases.forEach(canvas => {
+    drawMiniChart(canvas.id);
+  });
 });

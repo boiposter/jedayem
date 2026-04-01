@@ -4,267 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="جديم - حسابي. سجل دخول أو أنشئ حساب جديد.">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; link-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:;">
   <title>جديم | حسابي</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    /* Glassmorphism Auth Card */
-    #auth-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: calc(100vh - 64px);
-      padding: 2rem;
-      background: linear-gradient(135deg, rgba(10,15,30,0.9) 0%, rgba(17,24,51,0.8) 100%);
-      position: relative;
-    }
-
-    #auth-section::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(0,214,143,0.08) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: float 8s ease-in-out infinite;
-    }
-
-    #auth-section::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -10%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(0,214,143,0.05) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: float 10s ease-in-out infinite reverse;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(20px, -20px); }
-    }
-
-    .auth-card-wrapper {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 480px;
-    }
-
-    .auth-card {
-      background: rgba(17, 24, 51, 0.7);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 214, 143, 0.15);
-      border-radius: 16px;
-      padding: 2.5rem;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .auth-card:hover {
-      border-color: rgba(0, 214, 143, 0.25);
-      box-shadow: 0 8px 40px rgba(0, 214, 143, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .auth-tabs {
-      display: flex;
-      border-bottom: 2px solid rgba(36, 48, 85, 0.6);
-      margin-bottom: 2rem;
-      gap: 0;
-    }
-
-    .auth-tab {
-      flex: 1;
-      text-align: center;
-      padding: 1rem;
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--gray-400);
-      border: none;
-      background: none;
-      font-family: 'Tajawal', sans-serif;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      position: relative;
-      margin-bottom: -2px;
-    }
-
-    .auth-tab:hover {
-      color: var(--green-400);
-    }
-
-    .auth-tab.active {
-      color: var(--green-400);
-    }
-
-    .auth-tab.active::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--green-500);
-      border-radius: 2px;
-    }
-
-    #profile-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: calc(100vh - 64px);
-      padding: 2rem;
-      background: linear-gradient(135deg, rgba(10,15,30,0.9) 0%, rgba(17,24,51,0.8) 100%);
-    }
-
-    .profile-card {
-      background: rgba(17, 24, 51, 0.7);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 214, 143, 0.15);
-      border-radius: 16px;
-      padding: 2.5rem;
-      max-width: 600px;
-      width: 100%;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .profile-header {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(0, 214, 143, 0.1);
-    }
-
-    #profile-avatar {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, rgba(0, 214, 143, 0.2), rgba(46, 255, 158, 0.1));
-      border: 2px solid var(--green-500);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--green-400);
-      flex-shrink: 0;
-    }
-
-    .profile-info h2 {
-      font-size: 1.3rem;
-      margin-bottom: 0.3rem;
-      color: var(--white);
-    }
-
-    .profile-info p {
-      color: var(--gray-400);
-      font-size: 0.95rem;
-    }
-
-    .balance-display {
-      background: linear-gradient(135deg, rgba(0, 214, 143, 0.12) 0%, rgba(0, 179, 119, 0.08) 100%);
-      border: 1px solid rgba(0, 214, 143, 0.2);
-      border-radius: 12px;
-      padding: 1.75rem;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .balance-label {
-      font-size: 0.85rem;
-      color: var(--gray-400);
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-    }
-
-    #profile-balance {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--green-400);
-      text-shadow: 0 0 20px rgba(0, 214, 143, 0.2);
-    }
-
-    .profile-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .stat-box {
-      background: rgba(36, 48, 85, 0.4);
-      border: 1px solid rgba(0, 214, 143, 0.1);
-      border-radius: 12px;
-      padding: 1.25rem;
-      text-align: center;
-    }
-
-    .stat-box-label {
-      font-size: 0.85rem;
-      color: var(--gray-400);
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-box-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--green-400);
-    }
-
-    .activity-section {
-      margin-bottom: 2rem;
-    }
-
-    .activity-section h3 {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      color: var(--white);
-    }
-
-    .activity-placeholder {
-      background: rgba(36, 48, 85, 0.3);
-      border: 1px dashed rgba(0, 214, 143, 0.2);
-      border-radius: 8px;
-      padding: 2rem;
-      text-align: center;
-      color: var(--gray-400);
-      font-size: 0.95rem;
-    }
-
-    #logout-btn {
-      width: 100%;
-      background: rgba(255, 77, 106, 0.15);
-      color: var(--red-500);
-      border: 1.5px solid var(--red-500);
-      padding: 0.7rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Tajawal', sans-serif;
-      font-size: 0.95rem;
-    }
-
-    #logout-btn:hover {
-      background: var(--red-500);
-      color: white;
-      transform: translateY(-2px);
-    }
-  </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-inner">
-      <a href="/" class="logo">جدي<span class="logo-accent">م</span></a>
+      <a href="/" class="logo">جدي<span>م</span></a>
       <button class="nav-toggle" id="navToggle" aria-label="القائمة">
         <i class="fas fa-bars"></i>
       </button>
@@ -282,97 +31,87 @@
   </nav>
 
   <!-- Auth Section (shown when logged out) -->
-  <div id="auth-section">
-    <div class="auth-card-wrapper">
-      <div class="auth-card">
-        <div class="auth-tabs">
-          <button class="auth-tab active" id="login-tab" data-tab="login">تسجيل دخول</button>
-          <button class="auth-tab" id="register-tab" data-tab="register">حساب جديد</button>
-        </div>
-
-        <!-- Login Form -->
-        <form id="login-form">
-          <div class="form-group">
-            <label for="loginUsername">اسم المستخدم أو الإيميل</label>
-            <input type="text" id="loginUsername" class="form-control" placeholder="أدخل اسم المستخدم أو الإيميل" required autocomplete="username">
-          </div>
-          <div class="form-group">
-            <label for="loginPassword">كلمة السر</label>
-            <input type="password" id="loginPassword" class="form-control" placeholder="أدخل كلمة السر" required autocomplete="current-password">
-          </div>
-          <div id="login-error" class="form-error" style="margin-bottom:1rem;display:none"></div>
-          <button type="submit" class="btn btn-primary" style="width:100%">
-            دخول الآن
-          </button>
-        </form>
-
-        <!-- Register Form -->
-        <form id="register-form" style="display:none">
-          <div class="form-group">
-            <label for="regUsername">اسم المستخدم</label>
-            <input type="text" id="regUsername" class="form-control" placeholder="اختر اسم مستخدم فريد" required minlength="3" maxlength="20" autocomplete="username">
-          </div>
-          <div class="form-group">
-            <label for="regEmail">الإيميل</label>
-            <input type="email" id="regEmail" class="form-control" placeholder="أدخل إيميلك الصحيح" required autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="regDisplayName">الاسم المعروض</label>
-            <input type="text" id="regDisplayName" class="form-control" placeholder="الاسم اللي يبان للناس (اختياري)" maxlength="50">
-          </div>
-          <div class="form-group">
-            <label for="regPassword">كلمة السر</label>
-            <input type="password" id="regPassword" class="form-control" placeholder="٨ أحرف على الأقل (حروف + أرقام)" required minlength="8" autocomplete="new-password">
-          </div>
-          <div class="form-group">
-            <label for="regPasswordConfirm">تأكيد كلمة السر</label>
-            <input type="password" id="regPasswordConfirm" class="form-control" placeholder="أعد كتابة كلمة السر" required autocomplete="new-password">
-          </div>
-          <div id="register-error" class="form-error" style="margin-bottom:1rem;display:none"></div>
-          <button type="submit" class="btn btn-primary" style="width:100%">
-            سجّل الحين
-          </button>
-        </form>
+  <div class="auth-container" id="authSection">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">تسجيل دخول</button>
+        <button class="auth-tab" data-tab="register">حساب جديد</button>
       </div>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">الإيميل أو اسم المستخدم</label>
+          <input type="text" id="loginEmail" class="form-control" placeholder="ادخل إيميلك أو اسم المستخدم" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">كلمة السر</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="ادخل كلمة السر" required autocomplete="current-password">
+        </div>
+        <div id="loginError" class="form-error" style="margin-bottom:1rem;display:none"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%" id="loginBtn">
+          دخول
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" style="display:none">
+        <div class="form-group">
+          <label for="regUsername">اسم المستخدم</label>
+          <input type="text" id="regUsername" class="form-control" placeholder="اختر اسم مستخدم" required minlength="3" maxlength="20" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="regEmail">الإيميل</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="ادخل إيميلك" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="regDisplayName">الاسم المعروض (اختياري)</label>
+          <input type="text" id="regDisplayName" class="form-control" placeholder="الاسم اللي يبان للناس" maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="regPassword">كلمة السر</label>
+          <input type="password" id="regPassword" class="form-control" placeholder="٨ أحرف على الأقل (حروف + أرقام)" required minlength="8" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label for="regPasswordConfirm">تأكيد كلمة السر</label>
+          <input type="password" id="regPasswordConfirm" class="form-control" placeholder="أعد كتابة كلمة السر" required autocomplete="new-password">
+        </div>
+        <div id="registerError" class="form-error" style="margin-bottom:1rem;display:none"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%" id="registerBtn">
+          سجّل الحين
+        </button>
+      </form>
     </div>
   </div>
 
   <!-- Profile Section (shown when logged in) -->
-  <div id="profile-section" style="display:none">
-    <div class="profile-card">
+  <div class="section" id="profileSection" style="display:none">
+    <div class="profile-card card">
       <div class="profile-header">
-        <div id="profile-avatar">-</div>
+        <div class="profile-avatar" id="profileAvatar">-</div>
         <div class="profile-info">
-          <h2 id="profile-name">--</h2>
-          <p id="profile-email">--</p>
+          <h2 id="profileName">--</h2>
+          <p id="profileEmail">--</p>
         </div>
       </div>
 
       <div class="balance-display">
         <div class="balance-label">رصيدك</div>
-        <div id="profile-balance">0.00 ر.س</div>
+        <div class="balance-amount" id="profileBalance">0.00</div>
       </div>
 
-      <div class="profile-stats">
-        <div class="stat-box">
-          <div class="stat-box-label">إجمالي الرهانات</div>
-          <div class="stat-box-value">0</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+        <div class="card" style="text-align:center;padding:1rem">
+          <div style="font-size:0.85rem;color:var(--gray-400)">الرهانات</div>
+          <div style="font-size:1.3rem;font-weight:700;color:var(--green-400)">0</div>
         </div>
-        <div class="stat-box">
-          <div class="stat-box-label">الرهانات الرابحة</div>
-          <div class="stat-box-value">0</div>
-        </div>
-      </div>
-
-      <div class="activity-section">
-        <h3>سجل النشاط الأخير</h3>
-        <div class="activity-placeholder">
-          <i class="fas fa-history" style="font-size:1.5rem;margin-bottom:0.5rem;display:block"></i>
-          لا توجد نشاطات سابقة
+        <div class="card" style="text-align:center;padding:1rem">
+          <div style="font-size:0.85rem;color:var(--gray-400)">الفوز</div>
+          <div style="font-size:1.3rem;font-weight:700;color:var(--gold-500)">0</div>
         </div>
       </div>
 
-      <button id="logout-btn" type="button">
+      <button class="btn btn-danger" style="width:100%" id="logoutBtn">
         <i class="fas fa-sign-out-alt"></i> تسجيل خروج
       </button>
     </div>
@@ -382,8 +121,8 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="logo">جدي<span class="logo-accent">م</span></div>
-        <p>أفضل موقع مراهنات رياضية في الخليج. نوفر لك تجربة آمنة وسريعة مع أعلى الاحتمالات.</p>
+        <div class="logo">جدي<span>م</span></div>
+        <p>أفضل موقع مراهنات رياضية في الخليج.</p>
       </div>
       <div class="footer-col">
         <h4>روابط سريعة</h4>
@@ -398,7 +137,6 @@
         <h4>الحساب</h4>
         <ul>
           <li><a href="/account">تسجيل دخول</a></li>
-          <li><a href="/account">حساب جديد</a></li>
         </ul>
       </div>
     </div>

@@ -3,449 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="جديم - المباريات المباشرة. تابع النتائج لحظة بلحظة مع أفضل الاحتمالات.">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="description" content="جديم - المباريات المباشرة. تابع النتائج لحظة بلحظة وشاهد احتمالات الفوز في الوقت الفعلي.">
   <title>جديم | المباشر</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    .live-header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      padding: 2.5rem 0;
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .live-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at 20% 50%, rgba(255, 184, 28, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(255, 184, 28, 0.05) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    .live-header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
-
-    .live-header-text h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #fff;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .live-pulse-animation {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background-color: #ff4444;
-      border-radius: 50%;
-      animation: pulse-glow 2s infinite;
-    }
-
-    @keyframes pulse-glow {
-      0% {
-        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
-      }
-      70% {
-        box-shadow: 0 0 0 10px rgba(255, 68, 68, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
-      }
-    }
-
-    .live-header-subtitle {
-      font-size: 0.95rem;
-      color: #b0b0b0;
-      margin: 0;
-    }
-
-    .live-count-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: rgba(255, 184, 28, 0.15);
-      border: 1px solid rgba(255, 184, 28, 0.3);
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      font-weight: 600;
-      color: #ffc419;
-    }
-
-    .live-count-badge i {
-      animation: spin-animation 2s linear infinite;
-    }
-
-    @keyframes spin-animation {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .refresh-indicator {
-      font-size: 0.85rem;
-      color: #888;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    .refresh-dot {
-      width: 6px;
-      height: 6px;
-      background-color: #4CAF50;
-      border-radius: 50%;
-      animation: refresh-pulse 3s infinite;
-    }
-
-    @keyframes refresh-pulse {
-      0%, 100% {
-        background-color: #4CAF50;
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.5;
-      }
-    }
-
-    .matches-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .match-card {
-      background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
-      border: 1px solid rgba(255, 184, 28, 0.2);
-      border-radius: 12px;
-      padding: 1.5rem;
-      position: relative;
-      transition: all 0.3s ease;
-      overflow: hidden;
-    }
-
-    .match-card:hover {
-      border-color: rgba(255, 184, 28, 0.5);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(255, 184, 28, 0.15);
-    }
-
-    .match-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255, 184, 28, 0.05) 0%, transparent 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-
-    .match-card:hover::before {
-      opacity: 1;
-    }
-
-    .match-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      gap: 1rem;
-    }
-
-    .match-league {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #ffc419;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .match-time-badge {
-      background: rgba(255, 68, 68, 0.2);
-      border: 1px solid rgba(255, 68, 68, 0.4);
-      color: #ff6b6b;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .match-time-badge .live-dot {
-      width: 6px;
-      height: 6px;
-      background-color: #ff4444;
-      border-radius: 50%;
-      animation: pulse-glow 2s infinite;
-    }
-
-    .match-teams {
-      margin-bottom: 1.5rem;
-    }
-
-    .team-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 184, 28, 0.1);
-    }
-
-    .team-row:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-
-    .team-info {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex: 1;
-    }
-
-    .team-name {
-      font-weight: 600;
-      color: #fff;
-      font-size: 0.95rem;
-    }
-
-    .team-score {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #ffc419;
-      min-width: 50px;
-      text-align: center;
-    }
-
-    .match-stats {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      border-top: 1px solid rgba(255, 184, 28, 0.1);
-      margin-bottom: 1rem;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: #888;
-      margin-bottom: 0.3rem;
-    }
-
-    .stat-value {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ffc419;
-    }
-
-    .odds-container {
-      margin-bottom: 1rem;
-      padding: 1rem;
-      background: rgba(255, 184, 28, 0.05);
-      border-radius: 8px;
-      border: 1px solid rgba(255, 184, 28, 0.15);
-    }
-
-    .odds-label {
-      font-size: 0.75rem;
-      color: #888;
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .odds-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.75rem;
-    }
-
-    .odds-item {
-      text-align: center;
-      padding: 0.75rem;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 6px;
-      border: 1px solid rgba(255, 184, 28, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .odds-item:hover {
-      background: rgba(255, 184, 28, 0.15);
-      border-color: rgba(255, 184, 28, 0.3);
-    }
-
-    .odds-outcome {
-      font-size: 0.75rem;
-      color: #b0b0b0;
-      margin-bottom: 0.3rem;
-    }
-
-    .odds-value {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ffc419;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-    }
-
-    .odds-arrow {
-      font-size: 0.8rem;
-      margin-left: 0.25rem;
-    }
-
-    .odds-arrow.up {
-      color: #4CAF50;
-    }
-
-    .odds-arrow.down {
-      color: #ff6b6b;
-    }
-
-    .bet-button {
-      width: 100%;
-      padding: 0.95rem;
-      background: linear-gradient(135deg, #ffc419 0%, #ffb300 100%);
-      border: none;
-      border-radius: 8px;
-      color: #1a1a2e;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .bet-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(255, 196, 25, 0.3);
-    }
-
-    .bet-button:active {
-      transform: translateY(0);
-    }
-
-    .section-title {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: #888;
-      margin-bottom: 1.5rem;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 3rem 1.5rem;
-      background: rgba(255, 184, 28, 0.05);
-      border: 2px dashed rgba(255, 184, 28, 0.2);
-      border-radius: 12px;
-    }
-
-    .empty-state-icon {
-      font-size: 3rem;
-      color: #888;
-      margin-bottom: 1rem;
-    }
-
-    .empty-state h3 {
-      color: #fff;
-      margin-bottom: 0.5rem;
-    }
-
-    .empty-state p {
-      color: #888;
-    }
-
-    .loader {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-    }
-
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(255, 184, 28, 0.2);
-      border-top-color: #ffc419;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .live-header {
-        padding: 1.5rem 0;
-      }
-
-      .live-header-text h1 {
-        font-size: 1.75rem;
-      }
-
-      .live-header-content {
-        justify-content: center;
-        text-align: center;
-      }
-
-      .matches-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .odds-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -469,51 +30,41 @@
     </div>
   </nav>
 
-  <!-- Live Header -->
-  <section class="live-header">
-    <div class="live-header-content">
-      <div class="live-header-text">
-        <h1>
-          <span class="live-pulse-animation"></span>
-          المباشر
-        </h1>
-        <p class="live-header-subtitle">تابع أفضل المباريات الحية مع أفضل الاحتمالات</p>
-        <div class="refresh-indicator">
-          <span class="refresh-dot"></span>
-          يتحدث كل ٣٠ ثانية
-        </div>
-      </div>
-      <div class="live-count-badge">
-        <i class="fas fa-broadcast-tower"></i>
-        <span>
-          <span id="live-count">0</span>
-          مباشر
+  <section class="section">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;flex-wrap:wrap">
+      <h1 class="section-title" style="margin-bottom:0">
+        <span style="display:inline-block;position:relative">
+          🔴
+          <style>
+            @keyframes live-pulse {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0.6; }
+            }
+            .live-pulse {
+              animation: live-pulse 1.5s ease-in-out infinite;
+            }
+          </style>
+          <span class="live-pulse" style="display:inline">المباشر</span>
         </span>
-      </div>
+      </h1>
+      <span class="live-badge" id="liveCountBadge"><span class="live-dot"></span> <span id="liveCountNumber">0</span> مباشر</span>
     </div>
-  </section>
+    <p class="section-subtitle">تابع المباريات لحظة بلحظة — يتحدث تلقائياً كل ٣٠ ثانية</p>
 
-  <!-- Main Content -->
-  <section style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 3rem;">
+    <div id="liveCount" style="margin-bottom:1.5rem;color:var(--gray-400);font-size:0.9rem"></div>
 
-    <!-- Live Matches -->
-    <div style="margin-bottom: 3rem;">
-      <h2 class="section-title">المباريات المباشرة</h2>
-      <p class="section-subtitle">المباريات اللي تقل الحين — مراهنات آمنة وموثوقة</p>
-      <div class="matches-grid" id="live-matches">
+    <div class="matches-grid" id="liveMatches">
+      <div class="loader"><div class="spinner"></div></div>
+    </div>
+
+    <!-- Upcoming matches -->
+    <div style="margin-top:3rem">
+      <h2 class="section-title">📅 المباريات القادمة</h2>
+      <p class="section-subtitle">المباريات اللي بتبدأ قريب</p>
+      <div class="matches-grid" id="upcomingMatches">
         <div class="loader"><div class="spinner"></div></div>
       </div>
     </div>
-
-    <!-- Upcoming Matches -->
-    <div style="margin-bottom: 3rem;">
-      <h2 class="section-title">المباريات القادمة</h2>
-      <p class="section-subtitle">المباريات اللي بتبدأ قريب — جاهز للمراهنة</p>
-      <div class="matches-grid" id="upcoming-matches">
-        <div class="loader"><div class="spinner"></div></div>
-      </div>
-    </div>
-
   </section>
 
   <!-- Footer -->
@@ -521,7 +72,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="logo">جدي<span>م</span></div>
-        <p>أفضل موقع مراهنات رياضية في الخليج. مراهنات آمنة وموثوقة مع أفضل الاحتمالات.</p>
+        <p>أفضل موقع مراهنات رياضية في الخليج.</p>
       </div>
       <div class="footer-col">
         <h4>روابط سريعة</h4>

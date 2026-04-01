@@ -1,202 +1,172 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="جديم - أفضل موقع مراهنات رياضية في الخليج. احتمالات مباشرة، مباريات حية، وتجربة آمنة.">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; link-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:;">
-  <title>جديم | الرئيسية</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="جديم - منصة الرهان الرياضية الخليجية الأولى. احتمالات مباشرة، مباريات حية، وتجربة آمنة.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>جديم | الرئيسية</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="/" class="logo">جدي<span class="logo-accent">م</span></a>
-
-      <div class="navbar-search">
-        <input type="search" class="search-input" placeholder="ابحث عن مباراة..." aria-label="البحث عن مباراة">
-        <button class="search-btn" aria-label="بحث">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-
-      <ul class="nav-categories">
-        <li><a href="#" class="cat-link active">الرائجة</a></li>
-        <li><a href="#" class="cat-link">كرة قدم</a></li>
-        <li><a href="#" class="cat-link">كرة سلة</a></li>
-        <li><a href="#" class="cat-link">الكل</a></li>
-      </ul>
-
-      <div class="nav-auth">
-        <a href="/account" class="btn btn-outline">دخول</a>
-        <a href="/account" class="btn btn-primary">سجّل الحين</a>
-      </div>
-
-      <button class="nav-toggle" id="navToggle" aria-label="القائمة">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Hero Section with Integrated Stats -->
-  <section class="hero">
-    <div class="hero-gradient"></div>
-    <div class="hero-content">
-      <h1 class="hero-title">مراهنات رياضية <span class="highlight">بطعم خليجي</span></h1>
-      <p class="hero-subtitle">أفضل الاحتمالات على المباريات المحلية والعالمية. سجّل الحين وابدأ تجربتك مع جديم.</p>
-
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="stat-value" id="stats-matches">--</div>
-          <div class="stat-text">مباراة متاحة</div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="logo">جدي<span>م</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="القائمة">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/" class="active">الرئيسية</a></li>
+                <li><a href="/odds">الاحتمالات</a></li>
+                <li><a href="/live">المباشر</a></li>
+                <li><a href="/faq">الأسئلة الشائعة</a></li>
+            </ul>
+            <div class="nav-auth" id="navAuth">
+                <a href="/account" class="btn btn-outline">دخول</a>
+                <a href="/account" class="btn btn-primary">سجّل الحين</a>
+            </div>
         </div>
-        <div class="hero-stat">
-          <div class="stat-value" id="stats-live">--</div>
-          <div class="stat-text">مباشر الحين</div>
-        </div>
-        <div class="hero-stat">
-          <div class="stat-value" id="stats-sports">--</div>
-          <div class="stat-text">رياضة</div>
-        </div>
-      </div>
+    </nav>
 
-      <div class="hero-actions">
-        <a href="/account" class="btn btn-primary btn-lg">ابدأ الحين</a>
-        <a href="/live" class="btn btn-outline btn-lg">
-          <span class="pulse-dot"></span> المباريات المباشرة
-        </a>
-      </div>
-    </div>
-  </section>
+    <!-- Hero Section (Compact) -->
+    <section class="hero-compact">
+        <div class="hero-content">
+            <h1 class="hero-tagline">توقع، راهن، اربح</h1>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="total-matches">0</span>
+                    <span class="stat-label">مباراة</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="live-count">0</span>
+                    <span class="stat-label">مباشر الآن</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="sports-count">0</span>
+                    <span class="stat-label">رياضة</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Main Content with Sidebar Layout -->
-  <div class="main-container">
-    <main class="main-content">
-      <section class="featured-section">
+    <!-- Featured Carousel Section -->
+    <section class="featured-carousel-section">
         <div class="section-header">
-          <h2 class="section-title">🔥 مباريات اليوم</h2>
-          <p class="section-subtitle">أبرز المباريات المتاحة الحين</p>
+            <h2 class="section-title">المباريات المميزة</h2>
+        </div>
+        <div class="carousel-container">
+            <div class="featured-carousel" id="featuredCarousel"></div>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <div class="main-container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- Category Tabs -->
+            <div class="category-tabs-wrapper">
+                <div class="category-tabs">
+                    <button class="tab-pill active" data-category="all">الكل</button>
+                    <button class="tab-pill" data-category="كرة قدم">⚽ كرة قدم</button>
+                    <button class="tab-pill" data-category="كرة سلة">🏀 كرة سلة</button>
+                    <button class="tab-pill" data-category="تنس">🎾 تنس</button>
+                    <button class="tab-pill" data-category="كرة طائرة">🏐 كرة طائرة</button>
+                    <button class="tab-pill" data-category="ملاكمة">🥊 ملاكمة</button>
+                </div>
+            </div>
+
+            <!-- Matches Grid -->
+            <h2 class="section-title">مباريات اليوم</h2>
+            <div class="matches-grid" id="featuredMatches">
+                <div class="loader"><div class="spinner"></div></div>
+            </div>
         </div>
 
-        <div class="matches-grid" id="featured-matches">
-          <div class="loader"><div class="spinner"></div></div>
+        <!-- Right Column (Sidebar) -->
+        <div class="right-column">
+            <!-- Trending Section -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">الرائجة</h3>
+                <div class="trending-list" id="trending-list"></div>
+            </div>
+
+            <!-- Top Movers Section -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">أكبر التحركات</h3>
+                <div class="top-movers-list" id="top-movers"></div>
+            </div>
+
+            <!-- Live Activity Feed -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">نشاط حي</h3>
+                <div class="activity-feed" id="activity-feed"></div>
+            </div>
         </div>
-
-        <div class="section-footer">
-          <a href="/odds" class="btn btn-outline">شوف كل الاحتمالات <i class="fas fa-arrow-left"></i></a>
-        </div>
-      </section>
-    </main>
-
-    <aside class="sidebar">
-      <!-- Trending Section -->
-      <div class="sidebar-card">
-        <h3 class="sidebar-title">الرائجة <i class="fas fa-fire"></i></h3>
-        <ol class="trending-list" id="trending-list">
-          <li class="placeholder">جاري التحميل...</li>
-        </ol>
-      </div>
-
-      <!-- Top Movers Section -->
-      <div class="sidebar-card">
-        <h3 class="sidebar-title">أكبر التحركات <i class="fas fa-chart-line"></i></h3>
-        <div class="movers-list" id="top-movers">
-          <div class="placeholder">جاري التحميل...</div>
-        </div>
-      </div>
-
-      <!-- Quick Links -->
-      <div class="sidebar-card">
-        <h3 class="sidebar-title">روابط سريعة</h3>
-        <ul class="quick-links">
-          <li><a href="/live">المباريات المباشرة</a></li>
-          <li><a href="/odds">جميع الاحتمالات</a></li>
-          <li><a href="/portfolio">محفظتي</a></li>
-          <li><a href="/faq">الأسئلة الشائعة</a></li>
-        </ul>
-      </div>
-    </aside>
-  </div>
-
-  <!-- Features Section -->
-  <section class="section features-section">
-    <h2 class="section-title" style="text-align:center">ليش جديم؟</h2>
-    <p class="section-subtitle" style="text-align:center">مميزات تخليك ما تروح مكان ثاني</p>
-
-    <div class="features-grid">
-      <div class="card feature-card">
-        <div class="feature-icon">
-          <i class="fas fa-bolt"></i>
-        </div>
-        <h3>سرعة خيالية</h3>
-        <p>موقع سريع وخفيف، ما يحتاج تنتظر. كل شي يحمّل بلحظة.</p>
-      </div>
-
-      <div class="card feature-card">
-        <div class="feature-icon">
-          <i class="fas fa-lock"></i>
-        </div>
-        <h3>أمان عالي</h3>
-        <p>بياناتك محمية بأحدث تقنيات التشفير والحماية.</p>
-      </div>
-
-      <div class="card feature-card">
-        <div class="feature-icon">
-          <i class="fas fa-mobile-alt"></i>
-        </div>
-        <h3>يشتغل على كل جهاز</h3>
-        <p>تصميم متجاوب يشتغل على الجوال والتابلت والكمبيوتر.</p>
-      </div>
-
-      <div class="card feature-card">
-        <div class="feature-icon">
-          <i class="fas fa-trophy"></i>
-        </div>
-        <h3>أفضل الاحتمالات</h3>
-        <p>نقدم لك أعلى احتمالات في السوق على كل المباريات.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="logo">جدي<span class="logo-accent">م</span></div>
-        <p>أفضل موقع مراهنات رياضية في الخليج. نوفر لك تجربة آمنة وسريعة مع أعلى الاحتمالات.</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>روابط سريعة</h4>
-        <ul>
-          <li><a href="/">الرئيسية</a></li>
-          <li><a href="/odds">الاحتمالات</a></li>
-          <li><a href="/live">المباشر</a></li>
-          <li><a href="/faq">الأسئلة الشائعة</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>الحساب</h4>
-        <ul>
-          <li><a href="/account">تسجيل دخول</a></li>
-          <li><a href="/account">حساب جديد</a></li>
-        </ul>
-      </div>
     </div>
 
-    <div class="footer-bottom">
-      &copy; 2026 جديم. جميع الحقوق محفوظة.
-    </div>
-  </footer>
+    <!-- Features Section (Compact) -->
+    <section class="features-section">
+        <h2 class="section-title" style="text-align:center">لماذا جديم؟</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>أسواق حقيقية</h3>
+                <p>أسعار محدثة فوراً من التدفق الحي</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>آمنة وموثوقة</h3>
+                <p>منصة مشفرة بأعلى معايير الأمان</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>سريعة البث</h3>
+                <p>تحديثات فوراً بدون تأخير</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>عالمية</h3>
+                <p>الرياضات من حول العالم</p>
+            </div>
+        </div>
+    </section>
 
-  <div class="toast-container" id="toastContainer"></div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="logo">جدي<span>م</span></div>
+                <p>أفضل منصة رهان رياضية في الخليج. نوفر لك تجربة آمنة وسريعة مع أعلى الاحتمالات.</p>
+            </div>
+            <div class="footer-col">
+                <h4>روابط سريعة</h4>
+                <ul>
+                    <li><a href="/">الرئيسية</a></li>
+                    <li><a href="/odds">الاحتمالات</a></li>
+                    <li><a href="/live">المباشر</a></li>
+                    <li><a href="/faq">الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>الحساب</h4>
+                <ul>
+                    <li><a href="/account">تسجيل دخول</a></li>
+                    <li><a href="/account">حساب جديد</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 جديم. جميع الحقوق محفوظة.
+        </div>
+    </footer>
 
-  <script src="/js/app.js"></script>
-  <script src="/js/home.js"></script>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/home.js"></script>
 </body>
 </html>
