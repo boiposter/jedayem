@@ -1,5 +1,6 @@
 /**
  * Jedayem — FAQ Page Logic
+ * Accordion functionality with Kalshi-inspired design
  */
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.faq-question').forEach(function(btn) {

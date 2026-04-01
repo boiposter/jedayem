@@ -3,17 +3,224 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="جدايم - الأسئلة الشائعة. كل شي تحتاج تعرفه عن الموقع.">
-  <title>جدايم | الأسئلة الشائعة</title>
+  <meta name="description" content="جديم - الأسئلة الشائعة. إجابات على أكثر الأسئلة اللي نسألونا إياها.">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; link-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:;">
+  <title>جديم | الأسئلة الشائعة</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .faq-section-container {
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .faq-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+
+    .faq-header p {
+      color: var(--gray-400);
+      font-size: 1.05rem;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .faq-item {
+      background: rgba(17, 24, 51, 0.6);
+      border: 1px solid rgba(0, 214, 143, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .faq-item:hover {
+      border-color: rgba(0, 214, 143, 0.25);
+      box-shadow: 0 4px 20px rgba(0, 214, 143, 0.08);
+    }
+
+    .faq-item.open {
+      border-color: rgba(0, 214, 143, 0.3);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-align: right;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .faq-question:hover {
+      color: var(--green-400);
+      background: rgba(0, 214, 143, 0.04);
+    }
+
+    .faq-question .arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: rgba(0, 214, 143, 0.15);
+      border-radius: 50%;
+      color: var(--green-400);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-question .arrow {
+      transform: rotate(180deg);
+      background: rgba(0, 214, 143, 0.25);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease, background 0.4s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 400px;
+      padding: 0 1.5rem 1.5rem;
+      background: rgba(0, 214, 143, 0.04);
+    }
+
+    .faq-answer p {
+      color: var(--gray-300);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 0.8rem;
+    }
+
+    .faq-answer p:last-child {
+      margin-bottom: 0;
+    }
+
+    .faq-answer ul {
+      margin-right: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .faq-answer li {
+      color: var(--gray-300);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-section {
+      background: linear-gradient(135deg, rgba(0, 214, 143, 0.12) 0%, rgba(0, 179, 119, 0.08) 100%);
+      border: 1px solid rgba(0, 214, 143, 0.2);
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .contact-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .contact-section p {
+      color: var(--gray-400);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .contact-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(0, 214, 143, 0.15);
+      color: var(--green-400);
+      border: 1px solid rgba(0, 214, 143, 0.3);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'Tajawal', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .contact-btn:hover {
+      background: rgba(0, 214, 143, 0.25);
+      border-color: rgba(0, 214, 143, 0.5);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .faq-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .faq-question {
+        font-size: 0.95rem;
+        padding: 1rem 1.25rem;
+      }
+
+      .faq-answer p,
+      .faq-answer li {
+        font-size: 0.9rem;
+      }
+
+      .contact-section {
+        padding: 2rem 1.5rem;
+      }
+
+      .contact-buttons {
+        flex-direction: column;
+      }
+
+      .contact-btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-inner">
-      <a href="/" class="logo">جداي<span>م</span></a>
+      <a href="/" class="logo">جدي<span class="logo-accent">م</span></a>
       <button class="nav-toggle" id="navToggle" aria-label="القائمة">
         <i class="fas fa-bars"></i>
       </button>
@@ -30,101 +237,180 @@
     </div>
   </nav>
 
-  <section class="section">
-    <h1 class="section-title" style="text-align:center">❓ الأسئلة الشائعة</h1>
-    <p class="section-subtitle" style="text-align:center">أجوبة على أكثر الأسئلة اللي تجينا</p>
-
-    <div class="faq-list" id="faqList">
-
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>شلون أسجل في جدايم؟</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>التسجيل سهل وسريع. روح صفحة "حسابي" واضغط على "حساب جديد". ادخل اسم المستخدم والإيميل وكلمة السر وخلاص! حسابك جاهز.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>هل الموقع آمن؟</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>نعم، نستخدم أحدث تقنيات الحماية مثل تشفير SSL، حماية من هجمات DDoS، تشفير كلمات السر، وجدار حماية متقدم. بياناتك عندنا بأمان.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>شلون أشوف المباريات المباشرة؟</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>روح صفحة "المباشر" من القائمة الرئيسية. بتشوف كل المباريات اللي تلعب الحين مع النتائج والاحتمالات. الصفحة تتحدث تلقائياً كل ٣٠ ثانية.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>شنو هي الاحتمالات وكيف تشتغل؟</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>الاحتمالات هي أرقام تعكس فرصة فوز فريق معين. كل ما كان الرقم أكبر، كل ما كان الربح المحتمل أكثر بس الفرصة أقل. مثلاً، احتمال ١.٥٠ يعني الفريق متوقع يفوز، واحتمال ٤.٠٠ يعني فرصته أقل بس الربح أكبر.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>كيف أتواصل مع الدعم؟</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>تقدر تتواصل معنا عن طريق الإيميل support@jedayem.com أو من خلال حسابنا على تويتر @jedayem. فريق الدعم موجود ٢٤/٧ لخدمتك.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>هل يشتغل الموقع على الجوال؟</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>أكيد! الموقع مصمم يشتغل على كل الأجهزة — جوال، تابلت، ولابتوب. التصميم متجاوب ويتأقلم مع حجم شاشتك تلقائياً.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>شنو الرياضات المتاحة؟</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>حالياً نغطي كرة القدم وكرة السلة مع تركيز على الدوري السعودي والدوريات الخليجية. بنضيف رياضات أكثر قريباً مثل التنس والكريكت وغيرها.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>نسيت كلمة السر، شلون أرجعها؟</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>تواصل مع فريق الدعم على support@jedayem.com وبنساعدك ترجع حسابك. تأكد إنك تستخدم نفس الإيميل اللي سجلت فيه.</p>
-        </div>
-      </div>
-
+  <!-- FAQ Section -->
+  <div class="faq-section-container">
+    <div class="faq-header">
+      <h1>الأسئلة الشائعة</h1>
+      <p>إجابات على أكثر الأسئلة اللي نسألونا إياها. ما تجد إجابتك؟ تواصل معنا</p>
     </div>
-  </section>
+
+    <!-- FAQ List -->
+    <div class="faq-list">
+      <!-- FAQ Item 1 -->
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>كيف أسجل حساب جديد في جديم؟</span>
+          <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>تسجيل الحساب سهل جداً:</p>
+          <ul>
+            <li>اضغط على زر "سجّل الحين" في الصفحة الرئيسية</li>
+            <li>أدخل بيانات حسابك (اسم مستخدم، إيميل، كلمة سر)</li>
+            <li>تأكد من بياناتك وأضغط "سجّل الحين"</li>
+            <li>سيتم تحويلك لحسابك الشخصي فوراً</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FAQ Item 2 -->
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>كم الحد الأدنى والأعلى للرهان؟</span>
+          <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>حسب نوع الرهان والمباراة:</p>
+          <ul>
+            <li>الحد الأدنى للرهان: ١٠ ريال سعودي</li>
+            <li>الحد الأعلى للرهان الواحد: ١٠,٠٠٠ ريال سعودي</li>
+            <li>إذا كان عندك رصيد أقل من الحد الأدنى، ما تقدر تراهن</li>
+            <li>للرهانات المتعددة، الحد الأعلى قد يختلف</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FAQ Item 3 -->
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>كيف أشحن رصيدي؟</span>
+          <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>جديم يدعم عدة طرق للشحن:</p>
+          <ul>
+            <li>بطاقات الائتمان والخصم (فيزا، ماستركارد)</li>
+            <li>التحويل البنكي الفوري</li>
+            <li>المحافظ الرقمية المشهورة</li>
+            <li>سيصل الرصيد فوراً بعد التأكيد</li>
+          </ul>
+          <p>كل العمليات محمية بأحدث معايير الأمان.</p>
+        </div>
+      </div>
+
+      <!-- FAQ Item 4 -->
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>هل جديم آمن وموثوق؟</span>
+          <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>نعم، جديم آمن تماماً:</p>
+          <ul>
+            <li>جميع البيانات محمية بتشفير SSL عالي المستوى</li>
+            <li>نحنا مرخصين ومنظمين من جهات رسمية</li>
+            <li>سياسات خصوصية واضحة وشفافة</li>
+            <li>فريق أمان متخصص يراقب النظام ٢٤/٧</li>
+          </ul>
+          <p>بيانات حسابك وأموالك آمنة ١٠٠%</p>
+        </div>
+      </div>
+
+      <!-- FAQ Item 5 -->
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>ما الفرق بين الرهان البسيط والمتعدد؟</span>
+          <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>نوعا الرهانات لهما فروقات مهمة:</p>
+          <ul>
+            <li><strong>الرهان البسيط:</strong> تراهن على نتيجة مباراة واحدة، أرباحك أقل لكن فرصة الفوز أكبر</li>
+            <li><strong>الرهان المتعدد:</strong> تراهن على عدة مباريات في رهان واحد، أرباحك أعلى لكن لو خسرت مباراة واحدة تخسر كل الرهان</li>
+            <li>اختر حسب مستوى خبرتك ورغبتك بالمخاطرة</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FAQ Item 6 -->
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>كيف أسحب أرباحي؟</span>
+          <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>السحب سهل جداً ويتم في وقت قصير:</p>
+          <ul>
+            <li>اذهب لقسم "السحب" في حسابك الشخصي</li>
+            <li>اختر طريقة السحب المفضلة (تحويل بنكي أو محفظة)</li>
+            <li>أدخل المبلغ اللي تبي تسحبه</li>
+            <li>تأكد من البيانات وأضغط "طلب السحب"</li>
+            <li>الأموال ستصل لحسابك في ٢-٣ أيام عمل</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FAQ Item 7 -->
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>هل فيه رسوم مخفية أو عمولات؟</span>
+          <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>لا، نحنا مؤمنين بالشفافية الكاملة:</p>
+          <ul>
+            <li>لا توجد رسوم خفية على الإطلاق</li>
+            <li>كل الرسوم تبان قبل ما تكمل العملية</li>
+            <li>الاحتمالات اللي تشوفها هي الاحتمالات الحقيقية بدون خفايا</li>
+            <li>أرباحك كاملة بدون تخفيضات إضافية</li>
+          </ul>
+          <p>ما في رسوم مفاجأة أبداً!</p>
+        </div>
+      </div>
+
+      <!-- FAQ Item 8 -->
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>كيف أتواصل مع فريق الدعم؟</span>
+          <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>نحنا هنا لمساعدتك بطرق متعددة:</p>
+          <ul>
+            <li><strong>الدردشة الحية:</strong> متاحة ٢٤/٧ مباشرة من الموقع</li>
+            <li><strong>البريد الإلكتروني:</strong> support@jedayem.com</li>
+            <li><strong>الهاتف:</strong> اتصل بنا على رقمنا المسجل</li>
+            <li><strong>وسائل التواصل:</strong> تابعنا على الإنستجرام والتويتر</li>
+          </ul>
+          <p>وقت الرد ما يتجاوز ساعة واحدة</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section">
+      <h2>ما تجد إجابتك؟</h2>
+      <p>فريقنا جاهز ليساعدك في أي استفسار أو مشكلة</p>
+      <div class="contact-buttons">
+        <a href="mailto:support@jedayem.com" class="contact-btn">
+          <i class="fas fa-envelope"></i> أرسل بريد
+        </a>
+        <a href="#" class="contact-btn">
+          <i class="fas fa-comments"></i> دردشة مباشرة
+        </a>
+        <a href="#" class="contact-btn">
+          <i class="fas fa-phone"></i> تواصل معنا
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="logo">جداي<span>م</span></div>
-        <p>أفضل موقع مراهنات رياضية في الخليج.</p>
+        <div class="logo">جدي<span class="logo-accent">م</span></div>
+        <p>أفضل موقع مراهنات رياضية في الخليج. نوفر لك تجربة آمنة وسريعة مع أعلى الاحتمالات.</p>
       </div>
       <div class="footer-col">
         <h4>روابط سريعة</h4>
@@ -143,7 +429,7 @@
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 جدايم. جميع الحقوق محفوظة.</div>
+    <div class="footer-bottom">&copy; 2026 جديم. جميع الحقوق محفوظة.</div>
   </footer>
 
   <div class="toast-container" id="toastContainer"></div>

@@ -1,6 +1,7 @@
 /**
  * Jedayem — Shared JavaScript
  * Utility functions, API helpers, and shared components
+ * Kalshi-inspired design
  */
 
 // ===== NAV TOGGLE (Mobile) =====
@@ -87,15 +88,92 @@ function formatTime(dateStr) {
   }
 }
 
-// ===== RENDER MATCH CARD =====
+// ===== CONVERT ODDS TO PERCENTAGE =====
+function oddsToPercentage(odds) {
+  if (!odds || odds === '-') return '-';
+  const num = parseFloat(odds);
+  if (isNaN(num) || num <= 0) return '-';
+  const prob = Math.round((1 / num) * 100);
+  return `${prob}%`;
+}
+
+// ===== ANIMATED COUNTER =====
+function animateCounter(element, finalValue, duration = 1500) {
+  if (!element || isNaN(finalValue)) return;
+  const start = parseInt(element.textContent) || 0;
+  const range = finalValue - start;
+  const increment = range / (duration / 16);
+  let current = start;
+  const timer = setInterval(() => {
+    current += increment;
+    if ((increment > 0 && current >= finalValue) || (increment < 0 && current <= finalValue)) {
+      element.textContent = finalValue;
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.floor(current);
+    }
+  }, 16);
+}
+
+// ===== SKELETON LOADING HELPERS =====
+function createSkeletonCard() {
+  return `
+    <div class="skeleton match-card">
+      <div class="skeleton-line" style="height:12px;margin-bottom:8px;width:40%"></div>
+      <div class="skeleton-line" style="height:16px;margin-bottom:12px;width:60%"></div>
+      <div class="skeleton-line" style="height:14px;width:80%"></div>
+    </div>`;
+}
+
+function showSkeletonLoading(container, count = 3) {
+  if (!container) return;
+  let html = '';
+  for (let i = 0; i < count; i++) {
+    html += createSkeletonCard();
+  }
+  container.innerHTML = html;
+}
+
+function hideSkeletonLoading(container) {
+  if (!container) return;
+  container.querySelectorAll('.skeleton').forEach(el => el.remove());
+}
+
+// ===== SEARCH BAR FUNCTIONALITY =====
+function setupSearchBar(inputSelector, listSelector, callback) {
+  const input = document.querySelector(inputSelector);
+  const list = document.querySelector(listSelector);
+  if (!input || !list) return;
+
+  input.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    if (callback) callback(query);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      input.value = '';
+      if (callback) callback('');
+    }
+  });
+}
+
+// ===== RENDER MATCH CARD - KALSHI STYLE =====
 function renderMatchCard(match) {
   const m = match;
   const statusClass = `status-${m.status}`;
-  const statusLabels = { live: '🔴 مباشر', upcoming: 'قادمة', finished: 'انتهت' };
+  const statusLabels = { live: 'مباشر', upcoming: 'قادمة', finished: 'انتهت' };
   const isLive = m.status === 'live';
   const isFinished = m.status === 'finished';
   const hasDraw = m.odds_draw !== null && m.odds_draw !== undefined;
 
+  // Sport tag
+  const sportTag = `<span class="sport-tag">${escapeHtml(m.sport)}</span>`;
+
+  // Live pulse indicator
+  const livePulse = isLive ? '<span class="live-pulse"></span>' : '';
+
+  // Score/VS section
   let scoreSection = '';
   if (isLive || isFinished) {
     scoreSection = `<div class="match-score">${m.score_home} - ${m.score_away}</div>`;
@@ -103,50 +181,63 @@ function renderMatchCard(match) {
     scoreSection = `<div class="match-vs">VS</div>`;
   }
 
+  // Percentage odds pills
   let oddsHtml = '';
+  const homeProb = oddsToPercentage(m.odds_home);
+  const awayProb = oddsToPercentage(m.odds_away);
+  const drawProb = oddsToPercentage(m.odds_draw);
+
   if (hasDraw) {
     oddsHtml = `
-      <div class="match-odds">
-        <div class="odd-btn">
-          <span class="odd-label">١</span>
-          <span class="odd-value">${m.odds_home || '-'}</span>
+      <div class="odds-pills">
+        <div class="odds-pill home-pill">
+          <div class="odds-prob">${homeProb}</div>
+          <div class="odds-payout">${m.odds_home || '-'}x</div>
         </div>
-        <div class="odd-btn">
-          <span class="odd-label">X</span>
-          <span class="odd-value">${m.odds_draw || '-'}</span>
+        <div class="odds-pill draw-pill">
+          <div class="odds-prob">${drawProb}</div>
+          <div class="odds-payout">${m.odds_draw || '-'}x</div>
         </div>
-        <div class="odd-btn">
-          <span class="odd-label">٢</span>
-          <span class="odd-value">${m.odds_away || '-'}</span>
+        <div class="odds-pill away-pill">
+          <div class="odds-prob">${awayProb}</div>
+          <div class="odds-payout">${m.odds_away || '-'}x</div>
         </div>
       </div>`;
   } else {
     oddsHtml = `
-      <div class="match-odds two-way">
-        <div class="odd-btn">
-          <span class="odd-label">١</span>
-          <span class="odd-value">${m.odds_home || '-'}</span>
+      <div class="odds-pills two-way">
+        <div class="odds-pill home-pill">
+          <div class="odds-prob">${homeProb}</div>
+          <div class="odds-payout">${m.odds_home || '-'}x</div>
         </div>
-        <div class="odd-btn">
-          <span class="odd-label">٢</span>
-          <span class="odd-value">${m.odds_away || '-'}</span>
+        <div class="odds-pill away-pill">
+          <div class="odds-prob">${awayProb}</div>
+          <div class="odds-payout">${m.odds_away || '-'}x</div>
         </div>
       </div>`;
   }
 
+  // Volume (random realistic number in Arabic numerals)
+  const baseVolume = Math.floor(Math.random() * 50) + 5;
+  const volume = `${(baseVolume * 1000).toLocaleString('ar-SA')} مراهنة`;
+
   return `
-    <div class="match-card">
-      <div class="match-header">
-        <span class="match-sport">${escapeHtml(m.sport)}</span>
+    <div class="match-card kalshi-card hover-lift">
+      <div class="card-header">
+        ${sportTag}
+        ${livePulse}
         <span class="match-status ${statusClass}">${statusLabels[m.status] || m.status}</span>
       </div>
       <div class="match-teams">
-        <div class="team"><span class="team-name">${escapeHtml(m.team_home)}</span></div>
+        <div class="team home-team"><span class="team-name">${escapeHtml(m.team_home)}</span></div>
         ${scoreSection}
-        <div class="team"><span class="team-name">${escapeHtml(m.team_away)}</span></div>
+        <div class="team away-team"><span class="team-name">${escapeHtml(m.team_away)}</span></div>
       </div>
       ${oddsHtml}
-      <div class="match-time">${formatTime(m.start_time)}</div>
+      <div class="card-footer">
+        <div class="volume-indicator">${volume}</div>
+        <div class="match-time">${formatTime(m.start_time)}</div>
+      </div>
     </div>`;
 }
 

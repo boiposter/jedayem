@@ -1,8 +1,10 @@
 /**
  * Jedayem — Odds Page Logic
+ * Kalshi-inspired design with search and filters
  */
 var allMatches = [];
 var currentFilter = 'all';
+var searchQuery = '';
 
 document.addEventListener('DOMContentLoaded', async function() {
   // Filter buttons
@@ -15,13 +17,33 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
   });
 
+  // Search bar functionality
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderOdds();
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        searchQuery = '';
+        renderOdds();
+      }
+    });
+  }
+
   // Load matches
   try {
+    showSkeletonLoading(document.getElementById('oddsCards'), 6);
     var data = await apiGet('/api/matches');
     allMatches = data.matches || [];
     renderOdds();
   } catch(e) {
-    document.getElementById('oddsBody').innerHTML = '<tr><td colspan="8" class="empty-state">\u062E\u0637\u0623 \u0641\u064A \u062A\u062D\u0645\u064A\u0644 \u0627\u0644\u0628\u064A\u0627\u0646\u0627\u062A</td></tr>';
+    console.error('Error loading odds:', e);
+    const tbody = document.getElementById('oddsBody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="8" class="empty-state">خطأ في تحميل البيانات</td></tr>';
   }
 
   // Responsive: show cards on mobile
@@ -33,42 +55,62 @@ function handleResponsive() {
   var table = document.querySelector('.table-wrapper');
   var cards = document.getElementById('oddsCards');
   if (window.innerWidth <= 768) {
-    table.style.display = 'none';
-    cards.style.display = 'grid';
+    if (table) table.style.display = 'none';
+    if (cards) cards.style.display = 'grid';
   } else {
-    table.style.display = 'block';
-    cards.style.display = 'none';
+    if (table) table.style.display = 'block';
+    if (cards) cards.style.display = 'none';
   }
 }
 
 function statusText(status) {
-  var map = { live: '\uD83D\uDD34 \u0645\u0628\u0627\u0634\u0631', upcoming: '\u0642\u0627\u062F\u0645\u0629', finished: '\u0627\u0646\u062A\u0647\u062A' };
+  var map = { live: 'مباشر', upcoming: 'قادمة', finished: 'انتهت' };
   return map[status] || status;
 }
 
+function matchesSearchQuery(match) {
+  if (!searchQuery) return true;
+  const q = searchQuery;
+  return match.team_home.toLowerCase().includes(q) ||
+         match.team_away.toLowerCase().includes(q) ||
+         match.sport.toLowerCase().includes(q);
+}
+
 function renderOdds() {
-  var filtered = currentFilter === 'all' ? allMatches : allMatches.filter(function(m) { return m.status === currentFilter; });
+  let filtered = currentFilter === 'all' ? allMatches : allMatches.filter(function(m) { return m.status === currentFilter; });
+  filtered = filtered.filter(matchesSearchQuery);
 
   // Table view
   var tbody = document.getElementById('oddsBody');
-  if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">\u0645\u0627 \u0641\u064A \u0645\u0628\u0627\u0631\u064A\u0627\u062A \u0628\u0647\u0627\u0644\u062A\u0635\u0646\u064A\u0641</td></tr>';
-  } else {
-    tbody.innerHTML = filtered.map(function(m) {
-      return '<tr>' +
-        '<td>' + escapeHtml(m.sport) + '</td>' +
-        '<td><strong>' + escapeHtml(m.team_home) + '</strong></td>' +
-        '<td><strong>' + escapeHtml(m.team_away) + '</strong></td>' +
-        '<td style="color:var(--green-400);font-weight:700">' + (m.odds_home || '-') + '</td>' +
-        '<td style="color:var(--gold-500);font-weight:700">' + (m.odds_draw || '-') + '</td>' +
-        '<td style="color:var(--green-400);font-weight:700">' + (m.odds_away || '-') + '</td>' +
-        '<td><span class="match-status status-' + m.status + '">' + statusText(m.status) + '</span></td>' +
-        '<td style="font-size:0.85rem;color:var(--gray-400)">' + formatTime(m.start_time) + '</td>' +
-        '</tr>';
-    }).join('');
+  if (tbody) {
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ما في مباريات بهالتصنيف</td></tr>';
+    } else {
+      tbody.innerHTML = filtered.map(function(m) {
+        const homeProb = oddsToPercentage(m.odds_home);
+        const drawProb = oddsToPercentage(m.odds_draw);
+        const awayProb = oddsToPercentage(m.odds_away);
+        return '<tr>' +
+          '<td>' + escapeHtml(m.sport) + '</td>' +
+          '<td><strong>' + escapeHtml(m.team_home) + '</strong></td>' +
+          '<td><strong>' + escapeHtml(m.team_away) + '</strong></td>' +
+          '<td style="color:var(--green-400);font-weight:700">' + homeProb + ' <span style="font-size:0.85rem">(' + (m.odds_home || '-') + 'x)</span></td>' +
+          '<td style="color:var(--gold-500);font-weight:700">' + drawProb + ' <span style="font-size:0.85rem">(' + (m.odds_draw || '-') + 'x)</span></td>' +
+          '<td style="color:var(--green-400);font-weight:700">' + awayProb + ' <span style="font-size:0.85rem">(' + (m.odds_away || '-') + 'x)</span></td>' +
+          '<td><span class="match-status status-' + m.status + '">' + statusText(m.status) + '</span></td>' +
+          '<td style="font-size:0.85rem;color:var(--gray-400)">' + formatTime(m.start_time) + '</td>' +
+          '</tr>';
+      }).join('');
+    }
   }
 
   // Cards view
   var cards = document.getElementById('oddsCards');
-  cards.innerHTML = filtered.map(function(m) { return renderMatchCard(m); }).join('');
+  if (cards) {
+    if (filtered.length === 0) {
+      cards.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><p>ما في مباريات بهالتصنيف</p></div>';
+    } else {
+      cards.innerHTML = filtered.map(function(m) { return renderMatchCard(m); }).join('');
+    }
+  }
 }

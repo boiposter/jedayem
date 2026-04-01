@@ -1,5 +1,6 @@
 /**
  * Jedayem — Account Page Logic
+ * Auth functionality with Kalshi-inspired design
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -122,6 +123,6 @@ function showProfile(user) {
   navAuth.innerHTML = '';
   var span = document.createElement('span');
   span.style.cssText = 'color:var(--green-400);font-weight:600';
-  span.textContent = '\u0623\u0647\u0644\u0627\u064B ' + (user.display_name || user.username);
+  span.textContent = 'أهلاً ' + (user.display_name || user.username);
   navAuth.appendChild(span);
 }
