@@ -1,0 +1,90 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Pinyon;src:url(fonts/PinyonScript-Regular.ttf)}
+@font-face{font-family:Corm;src:url(fonts/CormorantGaramond.ttf);font-weight:300 700}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1350px;background:#f3efe4;position:relative;overflow:hidden;font-family:Corm,serif;color:#1b1b1b}
+.frame{position:absolute;inset:34px;border:2px solid #1b1b1b}
+.frame2{position:absolute;inset:46px;border:1px solid #1b1b1b}
+.title{position:absolute;top:88px;width:100%;text-align:center;font-family:Pinyon;font-size:118px;line-height:1}
+.sub{position:absolute;top:224px;width:100%;text-align:center;font-size:24px;letter-spacing:.42em;font-weight:500}
+.rule{position:absolute;top:282px;left:50%;width:200px;margin-left:-100px;border-top:1.5px solid #1b1b1b}
+svg.art{position:absolute;top:300px;left:0}
+.tag{position:absolute;bottom:128px;width:100%;text-align:center;font-size:44px;font-weight:500;font-style:italic}
+.loc{position:absolute;bottom:84px;width:100%;text-align:center;font-size:23px;letter-spacing:.3em;font-weight:600}
+</style></head><body>
+<div class="frame"></div><div class="frame2"></div>
+<div class="title">Barista She Wrote</div>
+<div class="sub">CAFÉ &nbsp;·&nbsp; ABU DHABI</div>
+<div class="rule"></div>
+
+<svg class="art" width="1080" height="800" viewBox="0 0 1080 800" fill="none" stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+ <filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="n"/>
+  <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
+ </filter>
+ <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="n"/>
+  <feDisplacementMap in="SourceGraphic" in2="n" scale="4"/>
+ </filter>
+</defs>
+
+<!-- SUN -->
+<g filter="url(#ink)" transform="translate(360 250) scale(1.15)">
+  <g stroke-width="5">
+    <circle r="112"/>
+    <circle r="100" stroke-width="2" stroke-dasharray="3 9"/>
+    <!-- spiral core -->
+    <path stroke-width="4.5" d="M0 0 C6 -6 14 -2 12 8 C10 20 -8 22 -18 12 C-30 -2 -22 -26 -2 -32 C22 -38 42 -18 40 8 C38 38 6 54 -24 46 C-58 36 -72 -4 -58 -36"/>
+  </g>
+  <!-- wavy rays -->
+  <g stroke-width="5">
+    <path d="M0 -136 C-10 -158 10 -172 0 -196"/>
+    <path d="M96 -96 C116 -112 112 -132 138 -140"/>
+    <path d="M136 0 C158 -10 172 10 196 0"/>
+    <path d="M96 96 C112 116 132 112 140 138"/>
+    <path d="M0 136 C10 158 -10 172 0 196"/>
+    <path d="M-96 96 C-116 112 -112 132 -138 140"/>
+    <path d="M-136 0 C-158 10 -172 -10 -196 0"/>
+    <path d="M-96 -96 C-112 -116 -132 -112 -140 -138"/>
+  </g>
+  <g stroke-width="3.5">
+    <path d="M52 -128 L62 -160"/><path d="M128 -52 L160 -62"/><path d="M128 52 L160 62"/><path d="M52 128 L62 160"/>
+    <path d="M-52 128 L-62 160"/><path d="M-128 52 L-160 62"/><path d="M-128 -52 L-160 -62"/><path d="M-52 -128 L-62 -160"/>
+  </g>
+  <!-- hatching shade -->
+  <g stroke-width="2.5" filter="url(#rough)">
+    <path d="M70 60 L96 34"/><path d="M80 74 L106 48"/><path d="M60 88 L88 62"/><path d="M92 84 L110 66"/>
+  </g>
+</g>
+
+<!-- MOON -->
+<g filter="url(#ink)" transform="translate(720 540) scale(1.25)">
+  <path stroke-width="5.5" d="M40 -150 C-80 -140 -150 -40 -120 70 C-90 170 40 200 130 130 C20 150 -60 80 -40 -20 C-28 -80 0 -122 40 -150 Z"/>
+  <path stroke-width="3" d="M30 -128 C-62 -112 -122 -30 -98 62 C-76 140 14 170 90 128" stroke-dasharray="2 10"/>
+  <!-- crater swirls -->
+  <g stroke-width="3.5">
+    <path d="M-92 20 C-84 4 -66 8 -70 24 C-74 40 -96 36 -94 18"/>
+    <path d="M-70 96 C-60 82 -44 90 -50 104 C-56 116 -74 110 -70 98"/>
+    <path d="M-100 -34 C-96 -46 -84 -44 -86 -34"/>
+  </g>
+  <!-- hatching -->
+  <g stroke-width="2.5" filter="url(#rough)">
+    <path d="M-110 90 L-82 124"/><path d="M-96 106 L-70 140"/><path d="M-70 130 L-46 154"/><path d="M-122 70 L-100 96"/>
+  </g>
+  <!-- stars -->
+  <g stroke-width="3.5">
+    <path d="M110 -60 L110 -28 M94 -44 L126 -44"/>
+    <path d="M70 20 L70 40 M60 30 L80 30"/>
+    <path d="M150 40 L150 52 M144 46 L156 46"/>
+    <circle cx="150" cy="-110" r="4"/><circle cx="60" cy="-60" r="3"/>
+  </g>
+</g>
+
+</svg>
+
+<div class="tag">Sun for the day. Moon for the night.</div>
+<div class="loc">AL ZA'FARANAH · ABU DHABI</div>
+</body></html>
