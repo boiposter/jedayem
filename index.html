@@ -174,7 +174,8 @@
   .contact { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 18px 0 0; font-size: 16px; color: var(--sage); }
   .contact__link { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; }
   .contact__link svg { width: 18px; height: 18px; color: var(--ribbon); flex: none; }
-  .contact__num { font-variant-numeric: lining-nums; white-space: nowrap; }
+  .contact__text { display: flex; flex-direction: column; align-items: center; line-height: 1.35; }
+  .contact__num { font-variant-numeric: lining-nums; white-space: nowrap; color: var(--ribbon); }
   .contact__call { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(180,154,107,.75); color: var(--ribbon); }
   .contact__call svg { width: 17px; height: 17px; }
   [lang="en"] .contact { font-size: 17px; }
@@ -205,7 +206,7 @@
   .dua { margin: 64px auto 0; max-width: 32ch; font-family: var(--cal); font-size: clamp(22px, 6vw, 28px); line-height: 1.7; color: var(--gilt-deep); }
   .dua::before { content: ""; display: block; width: 48px; height: 1px; margin: 0 auto 18px; background: rgba(180, 154, 107, .8); }
   [lang="en"] .dua { font-family: var(--en); font-style: italic; font-size: clamp(20px, 5.4vw, 24px); }
-  .dua--emirati { margin-top: 10px; font-size: clamp(26px, 7.5vw, 36px); color: var(--ribbon-deep); }
+  .dua--emirati { font-family: var(--cal) !important; font-style: normal !important; margin-top: 10px; font-size: clamp(26px, 7.5vw, 36px); color: var(--ribbon-deep); }
   .dua--emirati::before { display: none; }
 
   /* ---------- Music ---------- */
@@ -345,7 +346,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
           <span data-i18n="maps"></span>
         </a>
-        <a class="pill" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D8%B9%D8%B1%D8%B3%20%D9%87%D8%A7%D8%AF%D9%81%20%D8%A8%D9%86%20%D8%B9%D8%A8%D9%8A%D8%AF%20%D8%A7%D9%84%D8%B3%D9%88%D9%8A%D8%AF%D9%8A&dates=20261226T120000Z/20261226T180000Z&location=Majlis%20Al%20Bateen%2C%20Abu%20Dhabi&details=https%3A%2F%2Fmaps.app.goo.gl%2FGgrL7sSKvh8GXxwC9" target="_blank" rel="noopener">
+        <a class="pill" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D8%B9%D8%B1%D8%B3%20%D9%87%D8%A7%D8%AF%D9%81%20%D8%B9%D8%A8%D9%8A%D8%AF%20%D8%A8%D9%86%20%D8%AC%D8%AF%D9%8A%D9%85%20%D8%A7%D9%84%D8%B3%D9%88%D9%8A%D8%AF%D9%8A&dates=20261226T120000Z/20261226T180000Z&location=Majlis%20Al%20Bateen%2C%20Abu%20Dhabi&details=https%3A%2F%2Fmaps.app.goo.gl%2FGgrL7sSKvh8GXxwC9" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
           <span data-i18n="calendar"></span>
         </a>
@@ -353,7 +354,7 @@
       <p class="contact">
         <a class="contact__link" href="https://wa.me/971506266606" target="_blank" rel="noopener" data-i18n-lang>
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 3a8.9 8.9 0 0 0-7.6 13.5L3.2 21l4.6-1.2A8.9 8.9 0 1 0 12.04 3Zm0 16.2a7.3 7.3 0 0 1-3.72-1.02l-.27-.16-2.73.72.73-2.66-.18-.28a7.32 7.32 0 1 1 6.17 3.4Zm4.02-5.48c-.22-.11-1.3-.64-1.5-.71-.2-.08-.35-.11-.5.11-.14.22-.57.71-.7.86-.13.15-.26.17-.48.06a6 6 0 0 1-1.77-1.09 6.6 6.6 0 0 1-1.22-1.52c-.13-.22 0-.34.1-.45l.33-.39c.11-.13.15-.22.22-.37.08-.15.04-.28-.01-.39-.06-.11-.5-1.2-.68-1.64-.18-.43-.36-.37-.5-.38h-.43a.82.82 0 0 0-.6.28 2.5 2.5 0 0 0-.78 1.86 4.35 4.35 0 0 0 .91 2.3 9.9 9.9 0 0 0 3.8 3.36c.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.3-.53 1.49-1.04.18-.51.18-.95.13-1.04-.06-.1-.2-.15-.42-.26Z"/></svg>
-          <span><span data-i18n="contact"></span> · <span class="contact__num" data-i18n="contactSub"></span></span>
+          <span class="contact__text"><span data-i18n="contact"></span><span class="contact__num" data-i18n="contactSub"></span></span>
         </a>
         <a class="contact__call" href="tel:+971506266606" data-i18n-lang aria-label="Call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></a>
       </p>
@@ -504,6 +505,7 @@
     document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t[el.dataset.i18n]; });
     const hero = $('#heroName');
     hero.src = t.heroSrc; hero.alt = t.heroAlt; hero.classList.toggle('is-en', l === 'en');
+    document.title = l === 'ar' ? 'عرس هادف عبيد بن جديم السويدي' : 'The Wedding of Hadef Al Suwaidi';
     syncMusicLabel();
     startCountdown();
   }
@@ -618,7 +620,7 @@
   const letterTop = () => $('#invite').offsetTop + $('#letter').offsetTop;
   const cue = $('#scrollCue');
   function showScrollCue() {
-    if (letterTop() < scrollY + innerHeight * .85) return;
+    if (scrollY > letterTop() + innerHeight * .5) return;
     const startY = scrollY;
     const hide = () => { cue.classList.remove('is-on'); cue.setAttribute('aria-hidden', 'true'); cue.tabIndex = -1; removeEventListener('scroll', onScroll); };
     const onScroll = () => { if (Math.abs(scrollY - startY) > 60) hide(); };
