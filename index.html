@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#E9E1D3">
+<title>عرس هادف بن عبيد السويدي</title>
+<meta name="description" content="دعوة لحضور حفل زفاف هادف بن عبيد حمود بن جديم السويدي · Wedding invitation of Hadef Al Suwaidi">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AE">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="عرس هادف بن عبيد السويدي">
+<meta property="og:description" content="دعوة لحضور حفل زفاف هادف بن عبيد السويدي · You are invited">
+<meta property="og:image" content="assets/og-envelope.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%234C5B43'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='28' fill='%23F4EFE6' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+<link rel="preload" as="image" href="assets/envelope.jpg">
+<style>
+  :root {
+    --pearl: #F4EFE6;
+    --pearl-deep: #E9E1D3;
+    --ink: #36412D;
+    --sage: #5E6955;
+    --ribbon: #4C5B43;
+    --ribbon-deep: #3C4934;
+    --gilt: #B49A6B;
+    --gilt-deep: #9A7F4E;
+    --ar: 'Amiri', 'Times New Roman', serif;
+    --cal: 'Aref Ruqaa', 'Amiri', serif;
+    --en: 'Cormorant Garamond', 'Times New Roman', serif;
+    --ease: cubic-bezier(.22, .7, .2, 1);
+    color-scheme: light;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scrollbar-width: none; }
+  html::-webkit-scrollbar { display: none; }
+  body { margin: 0; min-height: 100svh; background: var(--pearl-deep); color: var(--ink); font-family: var(--ar); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body.is-gate, body.is-opening { overflow: hidden; height: 100svh; }
+  img { display: block; max-width: 100%; }
+  button { font: inherit; color: inherit; }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 2px solid var(--gilt); outline-offset: 3px; }
+  [lang="en"] { font-family: var(--en); }
+  [lang="ar"] { font-family: var(--ar); }
+
+  /* ---------- Stage: the fixed film behind everything ---------- */
+  .stage { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100lvh; z-index: 0; overflow: hidden; background: var(--pearl-deep); transform: translateZ(0); }
+  .stage__media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: none; user-select: none; }
+  .stage__terrace { filter: saturate(.88); }
+  #vLoop, #pLoop { opacity: 0; transition: opacity 1.4s ease; }
+  #vDoors, #pDoors { opacity: 0; transition: opacity .9s ease; }
+  .is-invite #pDoors { opacity: 1; }
+  .is-invite #vDoors.is-playing { opacity: 1; }
+  .is-looping #pLoop { opacity: 1; }
+  .is-looping #vLoop.is-playing { opacity: 1; }
+  .is-invite.is-looping #vDoors, .is-invite.is-looping #pDoors { opacity: 0; transition-duration: 1.4s; }
+  #vEnvelope { opacity: 0; }
+  #vEnvelope.is-playing { opacity: 1; }
+  .is-invite #envLayer { display: none; }
+  /* Poster motion when a clip is missing (slow dolly, GPU transform only) */
+  #pEnv { transform: scale(1); transition: transform 2.8s var(--ease); }
+  .is-opening.no-env #pEnv { transform: scale(1.14); }
+  #pDoors { transform: scale(1); transition: opacity .9s ease, transform 4.5s var(--ease); }
+  .is-invite.no-doors #pDoors { transform: scale(1.18); }
+  .stage__flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; transition: opacity .55s ease; }
+  .is-flash .stage__flash { opacity: 1; }
+  .stage__veil { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; background: linear-gradient(180deg, rgba(244,239,230,.1) 0%, rgba(244,239,230,.05) 45%, rgba(233,225,211,.85) 100%); }
+  .is-looping .stage__veil { opacity: 1; }
+
+  /* ---------- Gate: language + share ---------- */
+  .gate { position: fixed; inset: 0; z-index: 5; display: flex; align-items: flex-end; justify-content: center; padding: 16px 16px max(18px, env(safe-area-inset-bottom)); transition: opacity .5s ease, transform .6s var(--ease); }
+  .is-opening .gate, .is-invite .gate { opacity: 0; transform: translateY(14px); pointer-events: none; }
+  .is-invite .gate { visibility: hidden; }
+  .gate__panel { position: relative; width: min(100%, 420px); padding: 26px 22px 20px; border-radius: 26px; background: rgba(244, 239, 230, .84); -webkit-backdrop-filter: blur(16px) saturate(1.1); backdrop-filter: blur(16px) saturate(1.1); box-shadow: 0 18px 50px rgba(54, 65, 45, .22); text-align: center; animation: gate-in 1.1s var(--ease) .25s both; }
+  .gate__panel::before { content: ""; position: absolute; inset: 6px; border-radius: 21px; border: 1px solid rgba(180, 154, 107, .5); pointer-events: none; }
+  @keyframes gate-in { from { opacity: 0; transform: translateY(18px); } }
+  .gate__lead { margin: 0 0 16px; line-height: 1.25; }
+  .gate__lead [lang="ar"] { display: block; font-size: 22px; color: var(--ink); }
+  .gate__lead [lang="en"] { display: block; font-size: 18px; font-style: italic; color: var(--sage); margin-top: 2px; }
+  .gate__langs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .lang-btn { min-height: 58px; border: 0; border-radius: 16px; cursor: pointer; background: var(--ribbon); color: var(--pearl); font-size: 22px; line-height: 1; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 6px 16px rgba(60, 73, 52, .25); transition: background-color .2s ease, transform .15s ease; }
+  .lang-btn[lang="en"] { font-size: 23px; font-weight: 500; letter-spacing: .02em; }
+  .lang-btn:hover { background: var(--ribbon-deep); }
+  .lang-btn:active { transform: scale(.98); }
+  .gate__tools { display: flex; justify-content: center; gap: 28px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(180, 154, 107, .35); }
+  .tool { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 56px; padding: 0; border: 0; background: none; cursor: pointer; color: var(--ink); text-decoration: none; font-family: var(--en); font-size: 15px; font-weight: 500; letter-spacing: .03em; }
+  .tool__icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(180, 154, 107, .75); background: rgba(255, 255, 255, .35); transition: background-color .2s ease; }
+  .tool:hover .tool__icon { background: rgba(255, 255, 255, .75); }
+  .tool svg { width: 21px; height: 21px; }
+
+  /* ---------- Hero ---------- */
+  .invite { position: relative; z-index: 2; overflow-x: clip; }
+  .hero { height: 100svh; min-height: 560px; display: flex; justify-content: center; align-items: flex-start; padding: calc(27svh + env(safe-area-inset-top)) 24px 0; }
+  .hero__title { position: relative; display: flex; flex-direction: column; align-items: center; opacity: 0; transform: translateY(10px); transition: opacity 1.3s ease, transform 1.6s var(--ease); }
+  .hero__title::before { content: ""; position: absolute; inset: -30% -12%; z-index: -1; background: radial-gradient(closest-side, rgba(244, 239, 230, .7), rgba(244, 239, 230, 0)); }
+  .is-titled .hero__title { opacity: 1; transform: none; }
+  .hero__name { width: min(70vw, 330px); }
+  .hero__name.is-en { width: min(76vw, 380px); }
+
+  /* ---------- The letter ---------- */
+  .letter {
+    --arch: clamp(190px, 46vw, 250px);
+    position: relative; width: min(100% - 24px, 560px); margin: -20svh auto 0;
+    padding: calc(var(--arch) * .62) clamp(20px, 6vw, 48px) calc(104px + env(safe-area-inset-bottom));
+    border-radius: 50% 50% 0 0 / var(--arch) var(--arch) 0 0;
+    --paper-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='m' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .011' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .58 0 0 0 0 .5 0 0 0 0 .37 .8 0 0 0 -.36'/%3E%3C/filter%3E%3Crect width='420' height='420' filter='url(%23m)'/%3E%3C/svg%3E");
+    --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='d' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .42 0 0 0 0 .3 .85 0 0 0 -.4'/%3E%3C/filter%3E%3Cfilter id='l' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 .97 1 0 0 0 -.38'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23d)'/%3E%3Crect width='180' height='180' filter='url(%23l)'/%3E%3C/svg%3E");
+    --paper-fleck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='310' height='310'%3E%3Cfilter id='f' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.32' numOctaves='1' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .34 0 0 0 0 .28 0 0 0 0 .2 14 0 0 0 -10.5'/%3E%3C/filter%3E%3Crect width='310' height='310' filter='url(%23f)'/%3E%3C/svg%3E");
+    background: radial-gradient(80% 26% at 50% 0%, rgba(255, 253, 248, .75), transparent 72%), var(--paper-fleck), var(--paper-grain), var(--paper-mottle), #F3EEE3;
+    box-shadow: 0 -18px 60px rgba(40, 52, 34, .28); text-align: center;
+    opacity: 0; transform: translateY(32svh); transition: transform 1.8s var(--ease), opacity 1.1s ease;
+  }
+  .is-risen .letter { opacity: 1; transform: none; }
+  .letter::before { content: ""; position: absolute; inset: 9px 9px 0; border: 1px solid rgba(180, 154, 107, .55); border-bottom: 0; border-radius: 50% 50% 0 0 / calc(var(--arch) - 9px) calc(var(--arch) - 9px) 0 0; pointer-events: none; }
+  .letter__bow { position: absolute; top: calc(var(--arch) * .08); left: 50%; width: calc(var(--arch) * .7); transform: translateX(-50%) rotate(-3deg); mix-blend-mode: multiply; }
+  .block + .block { margin-top: 64px; }
+
+  .bism { margin: 0; font-family: var(--cal); font-size: clamp(24px, 6.5vw, 32px); color: var(--gilt-deep); }
+  .verse { margin: 12px auto 0; max-width: 30ch; font-size: clamp(18px, 4.8vw, 22px); line-height: 2; color: var(--ink); }
+
+  /* Hosts */
+  .hosts-ar .lead { font-size: clamp(26px, 7vw, 32px); margin: 0; color: var(--sage); font-family: var(--cal); }
+  .hosts-ar .host__name { margin: 14px 0 0; font-family: var(--cal); font-size: clamp(26px, 7.2vw, 36px); line-height: 1.5; color: var(--ink); white-space: nowrap; }
+  .hosts-ar .ask { margin: 24px 0 0; font-size: clamp(20px, 5.4vw, 26px); }
+  .hosts-ar .groom { margin: 6px 0 0; font-family: var(--cal); font-size: clamp(72px, 22vw, 116px); line-height: 1.2; color: var(--ribbon-deep); font-weight: 400; }
+  .hosts-ar .bride { margin: 10px auto 0; font-size: clamp(19px, 5.2vw, 24px); line-height: 1.5; color: var(--sage); }
+  .hosts-ar .bride--name { margin-top: 4px; font-family: var(--cal); font-size: clamp(24px, 6.6vw, 32px); color: var(--ink); white-space: nowrap; }
+
+  .hosts-en .lead { margin: 0; font-size: 21px; font-style: italic; color: var(--sage); }
+  .hosts-en .host__name { margin: 16px 0 0; font-size: clamp(22px, 6vw, 28px); font-weight: 500; line-height: 1.3; }
+  .hosts-en .ask { margin: 22px auto 0; max-width: 30ch; font-size: clamp(19px, 5vw, 22px); line-height: 1.45; }
+  .hosts-en .groom { margin: 14px 0 0; font-size: clamp(56px, 15vw, 72px); font-weight: 300; font-style: italic; line-height: 1.05; }
+  .hosts-en .bride { margin: 10px auto 0; font-size: clamp(18px, 4.8vw, 21px); line-height: 1.4; font-style: italic; color: var(--sage); }
+  .hosts-en .bride--name { font-style: normal; font-weight: 500; font-size: clamp(21px, 5.6vw, 25px); color: var(--ink); margin-top: 4px; }
+
+  /* Date inside the wreath */
+  .when { position: relative; width: min(84%, 310px); margin-inline: auto; aspect-ratio: 1; }
+  .when__wreath { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; mix-blend-mode: multiply; }
+  .when__text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .when-block { font-variant-numeric: lining-nums; }
+  .when__day { margin: 0; font-size: 18px; color: var(--sage); }
+  .when__num { margin: 0; font-size: clamp(56px, 16vw, 72px); line-height: 1; }
+  .when__month { margin: 2px 0 0; font-size: 18px; }
+  [lang="en"] .when__day { font-size: 20px; font-style: italic; }
+  [lang="en"] .when__num { font-weight: 300; font-size: clamp(62px, 18vw, 80px); line-height: .95; }
+  [lang="en"] .when__month { font-size: 20px; font-weight: 500; }
+  [lang="ar"] .when__num { font-size: clamp(50px, 14vw, 64px); line-height: 1.1; }
+  [lang="ar"] .when__month { margin-top: 0; }
+  .venue__name, .venue__tip, .words, .hosts-en .ask { text-wrap: balance; }
+  .when__time { margin: 12px 0 0; font-size: 20px; color: var(--ink); }
+  .when__hijri { margin: 4px 0 0; font-size: 16px; color: var(--sage); }
+  [lang="en"] .when__time { font-size: 21px; font-style: italic; }
+
+  /* Venue */
+  .venue__name { margin: 0 auto; max-width: 22ch; font-size: clamp(23px, 6.4vw, 30px); font-weight: 400; line-height: 1.35; }
+  [lang="en"] .venue__name { font-weight: 400; font-size: clamp(25px, 7vw, 32px); line-height: 1.2; }
+  .venue__art { width: calc(100% + 2 * clamp(20px, 6vw, 48px)); max-width: none; margin: 18px calc(-1 * clamp(20px, 6vw, 48px)) 6px; mix-blend-mode: multiply; }
+  .venue__addr { margin: 0; font-size: 19px; }
+  .venue__tip { margin: 10px auto 0; max-width: 32ch; font-size: 16px; line-height: 1.6; color: var(--sage); }
+  [lang="en"] .venue__addr { font-size: 20px; }
+  [lang="en"] .venue__tip { font-size: 18px; line-height: 1.45; font-style: italic; }
+  .pill { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; margin: 22px 4px 0; padding: 10px 24px; border-radius: 999px; border: 1px solid var(--ribbon); color: var(--ribbon); text-decoration: none; background: transparent; font-size: 17px; transition: background-color .2s ease, color .2s ease; }
+  [lang="en"] .pill { font-size: 19px; font-weight: 500; }
+  .pill:hover { background: var(--ribbon); color: var(--pearl); }
+  .pill svg { width: 18px; height: 18px; flex: none; }
+
+  /* Closing words + etiquette */
+  .words { margin: 0 auto; max-width: 30ch; font-size: clamp(19px, 5.2vw, 23px); line-height: 1.8; }
+  [lang="en"] .words { max-width: 32ch; font-size: clamp(20px, 5.4vw, 23px); line-height: 1.5; }
+  .notes { display: flex; justify-content: center; gap: 22px; margin: 34px 0 0; padding: 0; list-style: none; }
+  .notes li { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: 110px; font-size: 15px; color: var(--sage); line-height: 1.35; }
+  [lang="en"] .notes li { font-size: 17px; }
+  .notes__icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(180, 154, 107, .75); color: var(--ink); }
+  .notes svg { width: 24px; height: 24px; }
+
+  .closing { width: min(52%, 230px); margin: 64px auto 0; mix-blend-mode: multiply; }
+
+  /* Countdown */
+  .countdown { margin-top: 26px; font-variant-numeric: lining-nums tabular-nums; }
+  .countdown__title { margin: 0; font-size: clamp(22px, 6vw, 28px); font-weight: 400; }
+  [lang="en"] .countdown__title { font-size: clamp(26px, 7vw, 32px); font-style: italic; font-weight: 300; }
+  .countdown__units { display: flex; justify-content: center; margin-top: 20px; }
+  .unit { display: flex; flex-direction: column; align-items: center; width: 25%; max-width: 104px; padding: 2px 0; }
+  .unit + .unit { border-inline-start: 1px solid rgba(180, 154, 107, .55); }
+  .unit__num { font-size: clamp(34px, 10vw, 46px); line-height: 1.15; color: var(--ink); }
+  [lang="en"] .unit__num { font-weight: 300; font-size: clamp(40px, 11.5vw, 54px); line-height: 1; }
+  .unit__label { margin-top: 4px; font-size: 15px; color: var(--sage); }
+  [lang="en"] .unit__label { font-size: 17px; font-style: italic; }
+  .countdown__done { margin: 18px 0 0; font-size: 21px; }
+
+  .dua { margin: 64px auto 0; max-width: 32ch; font-family: var(--cal); font-size: clamp(22px, 6vw, 28px); line-height: 1.7; color: var(--gilt-deep); }
+  .dua::before { content: ""; display: block; width: 48px; height: 1px; margin: 0 auto 18px; background: rgba(180, 154, 107, .8); }
+  [lang="en"] .dua { font-family: var(--en); font-style: italic; font-size: clamp(20px, 5.4vw, 24px); }
+  .dua--emirati { margin-top: 10px; font-size: clamp(26px, 7.5vw, 36px); color: var(--ribbon-deep); }
+  .dua--emirati::before { display: none; }
+
+  /* ---------- Music ---------- */
+  .music { position: fixed; z-index: 6; bottom: max(16px, env(safe-area-inset-bottom)); inset-inline-end: 16px; display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 1px solid rgba(180, 154, 107, .6); border-radius: 50%; cursor: pointer; background: rgba(244, 239, 230, .78); color: var(--ink); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(40, 52, 34, .18); opacity: 0; transform: scale(.9); pointer-events: none; transition: opacity .6s ease, transform .6s var(--ease); }
+  .is-invite.has-music .music { opacity: 1; transform: none; pointer-events: auto; }
+  .music svg { width: 20px; height: 20px; }
+  .music .icon-off { display: none; }
+  .music[aria-pressed="false"] .icon-on { display: none; }
+  .music[aria-pressed="false"] .icon-off { display: block; }
+
+  /* ---------- Scroll prompt ---------- */
+  .scroll-cue { position: fixed; z-index: 6; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 1px; min-height: 48px; padding: 8px 22px 6px; border-radius: 999px; cursor: pointer; border: 1px solid rgba(255, 255, 255, .16); background: var(--ribbon); color: var(--pearl); box-shadow: 0 8px 22px rgba(40, 52, 34, .32); opacity: 0; visibility: hidden; transform: translate(-50%, 12px); pointer-events: none; transition: opacity .6s ease, transform .7s var(--ease), visibility 0s linear .7s; }
+  .scroll-cue.is-on { opacity: 1; visibility: visible; transform: translate(-50%, 0); pointer-events: auto; transition: opacity .6s ease, transform .7s var(--ease), visibility 0s; }
+  .scroll-cue__label { font-size: 16px; line-height: 1.25; white-space: nowrap; }
+  .scroll-cue[lang="en"] .scroll-cue__label { font-size: 18px; font-weight: 500; }
+  .scroll-cue svg { width: 18px; height: 18px; animation: cue-bob 1.8s ease-in-out infinite; }
+  @keyframes cue-bob { 0%, 100% { transform: translateY(-2px); opacity: .55; } 50% { transform: translateY(3px); opacity: 1; } }
+
+  /* ---------- QR sheet ---------- */
+  .sheet { width: min(100% - 32px, 380px); padding: 26px 22px 22px; border: 0; border-radius: 24px; background: var(--pearl); color: var(--ink); text-align: center; box-shadow: 0 30px 80px rgba(30, 38, 26, .4); }
+  .sheet::backdrop { background: rgba(38, 46, 32, .5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+  .sheet[open] { animation: sheet-in .45s var(--ease); }
+  @keyframes sheet-in { from { opacity: 0; transform: translateY(16px) scale(.98); } }
+  .sheet__close { position: absolute; top: 10px; inset-inline-end: 10px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: none; cursor: pointer; color: var(--sage); }
+  .sheet__close svg { width: 20px; height: 20px; }
+  .sheet__title { margin: 6px 0 16px; line-height: 1.3; }
+  .sheet__title [lang="ar"] { display: block; font-size: 21px; }
+  .sheet__title [lang="en"] { display: block; font-size: 18px; font-style: italic; color: var(--sage); }
+  .sheet__qr { width: min(100%, 260px); height: auto; margin: 0 auto; border-radius: 14px; border: 1px solid rgba(180, 154, 107, .5); }
+  .sheet__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+  .sheet__btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 58px; padding: 8px; border-radius: 14px; cursor: pointer; border: 1px solid var(--ribbon); background: transparent; color: var(--ribbon); }
+  .sheet__btn--solid { background: var(--ribbon); color: var(--pearl); }
+  .sheet__btn [lang="ar"] { font-size: 17px; line-height: 1.2; }
+  .sheet__btn [lang="en"] { font-size: 15px; font-weight: 500; line-height: 1.1; }
+  .sheet__status { min-height: 1.4em; margin: 12px 0 0; font-size: 15px; color: var(--sage); }
+
+  @media (min-aspect-ratio: 1/1) { #envLayer .stage__media { object-position: 50% 60%; } }
+  @media (min-width: 700px) { .letter { --arch: 280px; } .block + .block { margin-top: 80px; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body class="is-gate">
+
+<div class="stage" aria-hidden="true">
+  <img id="pLoop" class="stage__media stage__terrace" src="assets/courtyard-poster.jpg" alt="">
+  <video id="vLoop" class="stage__media stage__terrace" src="media/loop.mp4" poster="assets/courtyard-poster.jpg" muted loop playsinline preload="none"></video>
+  <img id="pDoors" class="stage__media stage__terrace" src="assets/doors-poster.jpg" alt="">
+  <video id="vDoors" class="stage__media stage__terrace" src="media/doors.mp4" poster="assets/doors-poster.jpg" muted playsinline preload="none"></video>
+  <div id="envLayer">
+    <img id="pEnv" class="stage__media" src="assets/envelope.jpg" alt="">
+    <video id="vEnvelope" class="stage__media" src="media/envelope-open.mp4" muted playsinline preload="auto"></video>
+  </div>
+  <div class="stage__veil"></div>
+  <div class="stage__flash"></div>
+</div>
+
+<section class="gate" id="gate" aria-labelledby="gateLead">
+  <div class="gate__panel">
+    <p class="gate__lead" id="gateLead">
+      <span lang="ar">اختر لغة الدعوة</span>
+      <span lang="en">Choose your language</span>
+    </p>
+    <div class="gate__langs">
+      <button class="lang-btn" type="button" data-lang="ar" lang="ar">العربية</button>
+      <button class="lang-btn" type="button" data-lang="en" lang="en">English</button>
+    </div>
+    <div class="gate__tools" dir="ltr">
+      <a class="tool" href="invitation.pdf" download="Hadef-Al-Suwaidi-Wedding-Invitation.pdf" aria-label="Download PDF / تنزيل PDF">
+        <span class="tool__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 19h14"/></svg></span>
+        PDF
+      </a>
+      <a class="tool" id="waLink" href="https://wa.me/" target="_blank" rel="noopener" aria-label="Share on WhatsApp / مشاركة عبر واتساب">
+        <span class="tool__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 3a8.9 8.9 0 0 0-7.6 13.5L3.2 21l4.6-1.2A8.9 8.9 0 1 0 12.04 3Zm0 16.2a7.3 7.3 0 0 1-3.72-1.02l-.27-.16-2.73.72.73-2.66-.18-.28a7.32 7.32 0 1 1 6.17 3.4Zm4.02-5.48c-.22-.11-1.3-.64-1.5-.71-.2-.08-.35-.11-.5.11-.14.22-.57.71-.7.86-.13.15-.26.17-.48.06a6 6 0 0 1-1.77-1.09 6.6 6.6 0 0 1-1.22-1.52c-.13-.22 0-.34.1-.45l.33-.39c.11-.13.15-.22.22-.37.08-.15.04-.28-.01-.39-.06-.11-.5-1.2-.68-1.64-.18-.43-.36-.37-.5-.38h-.43a.82.82 0 0 0-.6.28 2.5 2.5 0 0 0-.78 1.86 4.35 4.35 0 0 0 .91 2.3 9.9 9.9 0 0 0 3.8 3.36c.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.3-.53 1.49-1.04.18-.51.18-.95.13-1.04-.06-.1-.2-.15-.42-.26Z"/></svg></span>
+        WhatsApp
+      </a>
+      <button class="tool" id="qrOpen" type="button" aria-label="Show QR code / عرض رمز QR">
+        <span class="tool__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2v2"/></svg></span>
+        QR
+      </button>
+    </div>
+  </div>
+</section>
+
+<main class="invite" id="invite" hidden>
+  <header class="hero">
+    <div class="hero__title">
+      <img class="hero__name" id="heroName" src="assets/hero-title-ar.webp" alt="أفراح السويدي و الظاهري">
+    </div>
+  </header>
+
+  <article class="letter" id="letter">
+    <img class="letter__bow" src="assets/bow.webp" alt="">
+
+    <section class="block" data-only="ar" lang="ar" dir="rtl">
+      <p class="bism">بسم الله الرحمن الرحيم</p>
+      <p class="verse">﴿&nbsp;وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً&nbsp;﴾</p>
+    </section>
+
+    <section class="block hosts-ar" lang="ar" dir="rtl" data-only="ar">
+      <p class="lead">يتشرف</p>
+      <p class="host__name">عبيد حمود بن جديم السويدي</p>
+      <p class="ask">بدعوتكم لحضور حفل زفاف ابنه</p>
+      <p class="groom">هادف</p>
+      <p class="bride">على كريمة المرحوم</p>
+      <p class="bride bride--name">سهيل مبارك سرور الظاهري</p>
+    </section>
+
+    <section class="block hosts-en" lang="en" dir="ltr" data-only="en" hidden>
+      <p class="lead">With great pleasure,</p>
+      <p class="host__name">Obaid Hamood bin Jedayem Al Suwaidi</p>
+      <p class="ask">requests the honor of your presence at the wedding of his son</p>
+      <p class="groom">Hadef</p>
+      <p class="bride">to the daughter of the late</p>
+      <p class="bride bride--name">Suhail Mubarak Suroor Al Dhaheri</p>
+    </section>
+
+    <section class="block when-block" data-i18n-lang>
+      <div class="when">
+        <img class="when__wreath" src="assets/wreath.webp" alt="">
+        <div class="when__text">
+          <p class="when__day" data-i18n="day"></p>
+          <p class="when__num" data-i18n="num"></p>
+          <p class="when__month" data-i18n="month"></p>
+        </div>
+      </div>
+      <p class="when__time" data-i18n="time"></p>
+      <p class="when__hijri" data-i18n="hijri"></p>
+    </section>
+
+    <section class="block venue" data-i18n-lang>
+      <h2 class="venue__name" data-i18n="venueName"></h2>
+      <img class="venue__art" src="assets/venue.webp" alt="" loading="lazy">
+      <p class="venue__addr" data-i18n="venueAddress"></p>
+      <p class="venue__tip" data-i18n="venueTip"></p>
+      <div>
+        <a class="pill" href="https://maps.app.goo.gl/GgrL7sSKvh8GXxwC9" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          <span data-i18n="maps"></span>
+        </a>
+        <a class="pill" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D8%B9%D8%B1%D8%B3%20%D9%87%D8%A7%D8%AF%D9%81%20%D8%A8%D9%86%20%D8%B9%D8%A8%D9%8A%D8%AF%20%D8%A7%D9%84%D8%B3%D9%88%D9%8A%D8%AF%D9%8A&dates=20261226T120000Z/20261226T180000Z&location=Majlis%20Al%20Bateen%2C%20Abu%20Dhabi&details=https%3A%2F%2Fmaps.app.goo.gl%2FGgrL7sSKvh8GXxwC9" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+          <span data-i18n="calendar"></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="block" data-i18n-lang>
+      <p class="words" data-i18n="words"></p>
+      <ul class="notes">
+        <li>
+          <span class="notes__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v2"/></svg></span>
+          <span data-i18n="menOnly"></span>
+        </li>
+        <li>
+          <span class="notes__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h7l1 3v7a3 3 0 0 1-3 3h-2a3 3 0 0 1-3-3V7z"/><path d="M16 9h2a2 2 0 0 1 0 4h-2"/><path d="M7 21h9"/><path d="M4 7h4"/></svg></span>
+          <span data-i18n="dinner"></span>
+        </li>
+        <li>
+          <span class="notes__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h18v5H3z"/><path d="M5 13V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><path d="M4 18v2M20 18v2"/></svg></span>
+          <span data-i18n="majlis"></span>
+        </li>
+      </ul>
+    </section>
+
+    <img class="closing" src="assets/dallah.webp" alt="" loading="lazy">
+
+    <section class="countdown" data-i18n-lang aria-labelledby="cdTitle">
+      <h2 class="countdown__title" id="cdTitle" data-i18n="cdTitle"></h2>
+      <div class="countdown__units" id="cdUnits">
+        <div class="unit"><span class="unit__num" data-cd="d"></span><span class="unit__label" data-i18n="cdDays"></span></div>
+        <div class="unit"><span class="unit__num" data-cd="h"></span><span class="unit__label" data-i18n="cdHours"></span></div>
+        <div class="unit"><span class="unit__num" data-cd="m"></span><span class="unit__label" data-i18n="cdMins"></span></div>
+        <div class="unit"><span class="unit__num" data-cd="s"></span><span class="unit__label" data-i18n="cdSecs"></span></div>
+      </div>
+      <p class="countdown__done" id="cdDone" data-i18n="cdDone" hidden></p>
+    </section>
+
+    <p class="dua" data-i18n-lang data-i18n="dua"></p>
+    <p class="dua dua--emirati" data-i18n-lang data-i18n="dua2"></p>
+  </article>
+</main>
+
+<button class="music" id="musicBtn" type="button" aria-pressed="true" aria-label="Music">
+  <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+  <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="m16 9.5 5 5M21 9.5l-5 5"/></svg>
+</button>
+<button class="scroll-cue" id="scrollCue" type="button" data-i18n-lang aria-hidden="true" tabindex="-1">
+  <span class="scroll-cue__label" data-i18n="scrollHint"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+</button>
+<audio id="music" src="media/music.mp3" loop preload="none"></audio>
+
+<dialog class="sheet" id="qrSheet" aria-labelledby="qrTitle">
+  <form method="dialog">
+    <button class="sheet__close" aria-label="Close / إغلاق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </form>
+  <p class="sheet__title" id="qrTitle">
+    <span lang="ar">امسح الرمز لفتح الدعوة</span>
+    <span lang="en">Scan to open the invitation</span>
+  </p>
+  <canvas class="sheet__qr" id="qrCanvas" width="640" height="640" role="img" aria-label="QR code"></canvas>
+  <div class="sheet__actions">
+    <button class="sheet__btn sheet__btn--solid" id="qrSave" type="button"><span lang="ar">حفظ الرمز</span><span lang="en">Save QR</span></button>
+    <button class="sheet__btn" id="copyLink" type="button"><span lang="ar">نسخ الرابط</span><span lang="en">Copy link</span></button>
+  </div>
+  <p class="sheet__status" id="qrStatus" role="status" aria-live="polite"></p>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(() => {
+  const T = {
+    ar: {
+      day: 'السبت', num: '٢٦', month: 'ديسمبر ٢٠٢٦', time: 'من الساعة ٤:٠٠ عصراً', hijri: 'الموافق ١٧ رجب ١٤٤٨هـ',
+      venueName: 'مجلس البطين', venueAddress: 'البطين، أبوظبي، الإمارات العربية المتحدة', venueTip: 'عرس الرجال · نسعد بتشريفكم',
+      maps: 'افتح في خرائط Google', calendar: 'أضف إلى التقويم',
+      words: 'نتشرف بحضوركم ومشاركتنا فرحتنا، فبكم تكتمل الأفراح، ودامت دياركم عامرة بالمسرات.',
+      menOnly: 'الدعوة خاصة بالرجال', dinner: 'ضيافة الفوالة الإماراتية', majlis: 'جلسة مجلس إماراتي',
+      cdTitle: 'نترقّب هذا اليوم', cdDays: 'أيام', cdHours: 'ساعات', cdMins: 'دقائق', cdSecs: 'ثوانٍ',
+      cdDone: 'حلّ اليوم المنتظر، أهلاً بكم',
+      scrollHint: 'مرّر للأسفل', dua: 'بارك الله لهما وبارك عليهما وجمع بينهما في خير', dua2: 'يعله مِديم ومتبارك',
+      musicOn: 'إيقاف الموسيقى', musicOff: 'تشغيل الموسيقى',
+      heroAlt: 'أفراح السويدي و الظاهري', heroSrc: 'assets/hero-title-ar.webp'
+    },
+    en: {
+      day: 'Saturday', num: '26', month: 'December 2026', time: '4:00 PM onwards', hijri: '17 Rajab 1448 AH (approx.)',
+      venueName: 'Majlis Al Bateen', venueAddress: 'Al Bateen, Abu Dhabi, United Arab Emirates', venueTip: "Men's reception · We look forward to welcoming you",
+      maps: 'Open in Google Maps', calendar: 'Add to calendar',
+      words: 'We would be honored by your presence as we celebrate this joyful occasion. Your presence makes our happiness complete.',
+      menOnly: 'Gentlemen only', dinner: 'Traditional Emirati fuwala hospitality', majlis: 'Traditional majlis seating',
+      cdTitle: 'Counting down to the day', cdDays: 'Days', cdHours: 'Hours', cdMins: 'Minutes', cdSecs: 'Seconds',
+      cdDone: 'The day has arrived. Welcome!',
+      scrollHint: 'Scroll down', dua: 'May Allah bless them both and unite them in goodness', dua2: 'يعله مِديم ومتبارك',
+      musicOn: 'Pause music', musicOff: 'Play music',
+      heroAlt: 'The wedding of Hadef Al Suwaidi', heroSrc: 'assets/hero-title-en.webp'
+    }
+  };
+
+  const $ = (s) => document.querySelector(s);
+  const body = document.body;
+  const vEnv = $('#vEnvelope'), vDoors = $('#vDoors'), vLoop = $('#vLoop');
+  const music = $('#music'), musicBtn = $('#musicBtn');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const shareUrl = location.origin + location.pathname.replace(/index\.html?$/, '');
+  let lang = null;
+
+  /* ---- Share: WhatsApp + QR ---- */
+  const shareText = 'دعوة لحضور حفل زفاف هادف بن عبيد السويدي\nYou are invited to the wedding of Hadef Al Suwaidi\n' + shareUrl;
+  $('#waLink').href = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+
+  const qrSheet = $('#qrSheet'), qrCanvas = $('#qrCanvas'), qrStatus = $('#qrStatus');
+  function drawQR() {
+    const ctx = qrCanvas.getContext('2d'), size = qrCanvas.width;
+    ctx.fillStyle = '#F4EFE6'; ctx.fillRect(0, 0, size, size);
+    if (typeof qrcode !== 'function') { ctx.fillStyle = '#36412D'; ctx.font = '26px serif'; ctx.textAlign = 'center'; ctx.fillText(shareUrl, size / 2, size / 2); return; }
+    const qr = qrcode(0, 'M'); qr.addData(shareUrl); qr.make();
+    const n = qr.getModuleCount(), quiet = 4, cell = size / (n + quiet * 2);
+    ctx.fillStyle = '#36412D';
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) {
+      const x = Math.floor((c + quiet) * cell), y = Math.floor((r + quiet) * cell);
+      ctx.fillRect(x, y, Math.ceil((c + quiet + 1) * cell) - x, Math.ceil((r + quiet + 1) * cell) - y);
+    }
+  }
+  $('#qrOpen').addEventListener('click', () => { drawQR(); qrStatus.textContent = ''; qrSheet.showModal(); });
+  qrSheet.addEventListener('click', (e) => { if (e.target === qrSheet) qrSheet.close(); });
+  $('#qrSave').addEventListener('click', () => {
+    qrCanvas.toBlob(async (blob) => {
+      const file = new File([blob], 'Hadef-Wedding-QR.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] }) && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+        try { await navigator.share({ files: [file] }); return; } catch (err) { if (err.name === 'AbortError') return; }
+      }
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = file.name; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }, 'image/png');
+  });
+  $('#copyLink').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(shareUrl); qrStatus.textContent = 'تم نسخ الرابط · Link copied'; }
+    catch { qrStatus.textContent = shareUrl; }
+  });
+
+  /* ---- Language ---- */
+  function applyLang(l) {
+    const t = T[l];
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-only]').forEach((el) => { el.hidden = el.dataset.only !== l; });
+    document.querySelectorAll('[data-i18n-lang]').forEach((el) => { el.lang = l; });
+    document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t[el.dataset.i18n]; });
+    const hero = $('#heroName');
+    hero.src = t.heroSrc; hero.alt = t.heroAlt; hero.classList.toggle('is-en', l === 'en');
+    syncMusicLabel();
+    startCountdown();
+  }
+
+  /* ---- Countdown to Sat 26 Dec 2026, 4:00 PM Abu Dhabi (UTC+4) ---- */
+  const EVENT_AT = Date.parse('2026-12-26T16:00:00+04:00');
+  let cdTimer = null;
+  function startCountdown() {
+    const nf = new Intl.NumberFormat(lang === 'ar' ? 'ar-EG' : 'en', { minimumIntegerDigits: 2, useGrouping: false });
+    const cells = { d: $('[data-cd="d"]'), h: $('[data-cd="h"]'), m: $('[data-cd="m"]'), s: $('[data-cd="s"]') };
+    const tick = () => {
+      const left = EVENT_AT - Date.now();
+      if (left <= 0) { $('#cdUnits').hidden = true; $('#cdDone').hidden = false; clearInterval(cdTimer); return; }
+      const sec = Math.floor(left / 1000);
+      cells.d.textContent = nf.format(Math.floor(sec / 86400));
+      cells.h.textContent = nf.format(Math.floor(sec / 3600) % 24);
+      cells.m.textContent = nf.format(Math.floor(sec / 60) % 60);
+      cells.s.textContent = nf.format(sec % 60);
+    };
+    clearInterval(cdTimer); tick(); cdTimer = setInterval(tick, 1000);
+  }
+
+  /* ---- Music (only if media/music.mp3 exists) ---- */
+  let musicWanted = true, hasMusic = false;
+  fetch('media/music.mp3', { method: 'HEAD' }).then((r) => { if (r.ok) { hasMusic = true; body.classList.add('has-music'); music.preload = 'auto'; } }).catch(() => {});
+  function syncMusicLabel() {
+    if (!lang) return;
+    musicBtn.setAttribute('aria-pressed', String(musicWanted));
+    musicBtn.setAttribute('aria-label', musicWanted ? T[lang].musicOn : T[lang].musicOff);
+  }
+  function fadeIn(audio, to = .8, ms = 2500) {
+    const start = performance.now();
+    const step = (now) => { const k = Math.min(1, (now - start) / ms); audio.volume = to * k; if (k < 1 && !audio.paused) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  function playMusic() {
+    if (!hasMusic) return;
+    music.volume = 0;
+    const p = music.play();
+    if (p) p.then(() => fadeIn(music)).catch(() => { musicWanted = false; syncMusicLabel(); });
+  }
+  musicBtn.addEventListener('click', () => { musicWanted = !musicWanted; if (musicWanted) playMusic(); else music.pause(); syncMusicLabel(); });
+  document.addEventListener('visibilitychange', () => {
+    if (!lang) return;
+    if (document.hidden) { music.pause(); return; }
+    if (musicWanted) playMusic();
+    if (body.classList.contains('is-looping')) vLoop.play().catch(() => {});
+  });
+
+  /* ---- The film: envelope → doors → courtyard → letter ---- */
+  const once = (fn) => { let done = false; return (...a) => { if (!done) { done = true; fn(...a); } }; };
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  document.querySelectorAll('.lang-btn').forEach((btn) => btn.addEventListener('click', () => start(btn.dataset.lang)));
+
+  function start(l) {
+    if (lang) return;
+    lang = l; applyLang(l); playMusic();
+    body.classList.replace('is-gate', 'is-opening');
+    vEnv.addEventListener('playing', () => vEnv.classList.add('is-playing'), { once: true });
+    vEnv.play().catch(noEnvelopeClip);
+    setTimeout(afterEnvelope, 12000);
+    vDoors.load(); vLoop.load();
+  }
+  // No envelope clip: slow push-in on the still, then continue.
+  const noEnvelopeClip = once(() => { body.classList.add('no-env'); setTimeout(afterEnvelope, reduceMotion ? 50 : 2700); });
+  vEnv.addEventListener('timeupdate', () => { if (vEnv.duration && vEnv.currentTime >= vEnv.duration - .45) afterEnvelope(); });
+  vEnv.addEventListener('ended', () => afterEnvelope());
+  vEnv.addEventListener('error', () => { if (lang) noEnvelopeClip(); });
+
+  const afterEnvelope = once(async () => {
+    body.classList.add('is-flash');
+    await wait(reduceMotion ? 0 : 520);
+    $('#invite').hidden = false;
+    window.scrollTo(0, 0);
+    body.classList.remove('is-opening');
+    body.classList.add('is-invite');
+    vDoors.addEventListener('playing', () => vDoors.classList.add('is-playing'), { once: true });
+    if (doorsBroken) noDoorsClip(); else { vDoors.currentTime = 0; vDoors.play().catch(noDoorsClip); }
+    setTimeout(toTerrace, 10000);
+    await wait(80);
+    body.classList.remove('is-flash');
+  });
+  let doorsBroken = false;
+  const noDoorsClip = once(() => { body.classList.add('no-doors'); setTimeout(toTerrace, reduceMotion ? 50 : 3400); });
+  vDoors.addEventListener('timeupdate', () => { if (vDoors.duration && vDoors.currentTime >= vDoors.duration - 1.2) toTerrace(); });
+  vDoors.addEventListener('ended', () => toTerrace());
+  vDoors.addEventListener('error', () => { if (body.classList.contains('is-invite')) noDoorsClip(); else doorsBroken = true; });
+
+  const toTerrace = once(async () => {
+    vLoop.addEventListener('playing', () => vLoop.classList.add('is-playing'), { once: true });
+    vLoop.play().catch(() => {});
+    body.classList.add('is-looping');
+    await wait(500);
+    body.classList.add('is-titled');
+    await wait(reduceMotion ? 300 : 1700);
+    riseLetter();
+  });
+
+  const riseLetter = once(async () => {
+    body.classList.add('is-risen');
+    await wait(reduceMotion ? 0 : 1500);
+    if (window.scrollY < 24) await glideTo(letterTop() - innerHeight * .2);
+    await wait(reduceMotion ? 0 : 600);
+    showScrollCue();
+  });
+
+  // An early scroll after the title appears brings the letter up immediately.
+  addEventListener('scroll', () => { if (body.classList.contains('is-titled') && scrollY > 16) riseLetter(); }, { passive: true });
+
+  /* ---- "Scroll down" prompt ---- */
+  const letterTop = () => $('#invite').offsetTop + $('#letter').offsetTop;
+  const cue = $('#scrollCue');
+  function showScrollCue() {
+    if (letterTop() < scrollY + innerHeight * .85) return;
+    const startY = scrollY;
+    const hide = () => { cue.classList.remove('is-on'); cue.setAttribute('aria-hidden', 'true'); cue.tabIndex = -1; removeEventListener('scroll', onScroll); };
+    const onScroll = () => { if (Math.abs(scrollY - startY) > 60) hide(); };
+    addEventListener('scroll', onScroll, { passive: true });
+    cue.onclick = () => { hide(); glideTo(scrollY + innerHeight * .75, 1000); };
+    cue.classList.add('is-on'); cue.removeAttribute('aria-hidden'); cue.tabIndex = 0;
+  }
+
+  function glideTo(y, dur = 2200) {
+    if (reduceMotion) { window.scrollTo(0, y); return Promise.resolve(); }
+    return new Promise((done) => {
+      const from = window.scrollY, dist = y - from, t0 = performance.now();
+      let stopped = false;
+      const stop = () => { stopped = true; };
+      ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => addEventListener(ev, stop, { once: true, passive: true }));
+      const ease = (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+      const step = (now) => {
+        if (stopped) { done(); return; }
+        const k = Math.min(1, (now - t0) / dur);
+        window.scrollTo(0, from + dist * ease(k));
+        if (k < 1) requestAnimationFrame(step); else done();
+      };
+      requestAnimationFrame(step);
+    });
+  }
+})();
+</script>
+</body>
+</html>
